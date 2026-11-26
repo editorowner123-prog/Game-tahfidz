@@ -28,7 +28,7 @@
       ]
     },
     {
-      "source": "/manifest.webmanifest",
+      "source": "/manifest.json",
       "headers": [
         {
           "key": "Content-Type",
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "source": "/icons/(.*)",
+      "source": "/(icon-192|icon-512|icon-maskable-512|apple-touch-icon|favicon-32)\\.png",
       "headers": [
         {
           "key": "Cache-Control",
