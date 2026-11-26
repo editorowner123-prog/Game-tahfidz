@@ -260,3 +260,44 @@ html,body{margin:0;height:100%;overflow:hidden;background:#a9d77a;color:var(--in
 .pwa-step ol{margin:4px 0 0;padding-left:20px}
 .pwa-step li{margin-bottom:6px}
 .mcard .pwa-step p{margin:0 0 8px}
+/* cuaca & waktu sholat */
+.hl{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.alamp{padding:4px 12px 4px 5px;font-size:15px}
+.alamp .aic,.aic{width:30px;height:30px;flex:none;border-radius:10px;display:grid;place-items:center;background:linear-gradient(#7ec8f2,#4a98d8)}
+.aic svg{width:22px;height:22px}
+.aic.big{width:48px;height:48px;border-radius:15px}.aic.big svg{width:34px;height:34px}
+.alamp small{font-size:11.5px}
+.alamp.hot{background:#fff1c4;box-shadow:0 0 0 2px #e8b84a,var(--shadow);animation:denyut 1.6s ease-in-out infinite}
+@keyframes denyut{50%{transform:scale(1.04)}}
+.li.cuaca{gap:12px;align-items:center}
+.li.cuaca a{color:var(--m);font-weight:700}
+.jadwal .li{align-items:center}
+.jadwal .jam{margin-left:auto;font:800 18px 'Baloo 2';color:var(--ink)}
+.jadwal .tag{margin-left:10px}
+.jadwal .li.lewat{opacity:.55}
+.tag.gold{background:#fff1c4;color:#8a5a10}
+.singat{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:calc(max(10px,env(safe-area-inset-top)) + 112px);z-index:52;display:flex;align-items:center;gap:10px;max-width:calc(100% - 24px);padding:8px 16px 8px 10px;border-radius:18px;background:linear-gradient(135deg,#7a2236,#5a1424);color:#fff;box-shadow:0 12px 28px -10px rgba(60,10,24,.7);pointer-events:none;animation:pin .4s}
+.singat[hidden]{display:none}
+.singat svg{width:24px;height:24px;flex:none;color:#f2d06a;animation:goyang 1.2s ease-in-out infinite;transform-origin:50% 10%}
+.singat b{display:block;font:800 16px/1.15 'Baloo 2'}
+.singat small{display:block;font:700 12px Nunito;opacity:.85}
+@keyframes goyang{0%,60%,100%{transform:rotate(0)}15%{transform:rotate(14deg)}35%{transform:rotate(-12deg)}}
+.kunci{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;text-align:center;color:#fff;background:radial-gradient(120% 80% at 50% 10%,#3b2a6a 0%,#22173f 45%,#140c24 100%);overflow:hidden;user-select:none;-webkit-user-select:none}
+.kunci[hidden]{display:none}
+.kbintang{position:absolute;inset:0;opacity:.8;background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff 60%,transparent),radial-gradient(1px 1px at 28% 8%,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 72% 14%,#ffe9b0 60%,transparent),radial-gradient(1px 1px at 86% 30%,#fff 60%,transparent),radial-gradient(1px 1px at 52% 24%,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 8% 42%,#fff 60%,transparent),radial-gradient(1px 1px at 92% 52%,#ffe9b0 60%,transparent),radial-gradient(1px 1px at 38% 36%,#fff 60%,transparent);animation:kedip 4s ease-in-out infinite alternate}
+@keyframes kedip{to{opacity:.45}}
+.kw{position:relative;max-width:380px}
+.kmasjid{width:150px;height:auto;margin:0 auto 8px;display:block;filter:drop-shadow(0 10px 30px rgba(255,200,110,.35))}
+.kpre{margin:0;font:700 15px Nunito;letter-spacing:.06em;text-transform:uppercase;color:#f2d06a}
+.kunci h1{margin:2px 0 4px;font:800 clamp(44px,13vw,60px)/1 'Baloo 2',system-ui;color:#fff6e0}
+.kjam{margin:0 0 18px;font:700 14px Nunito;opacity:.8}
+.kcd{display:inline-block;font:800 46px/1 'Baloo 2';padding:12px 26px;border-radius:22px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1.5px rgba(242,208,106,.45);font-variant-numeric:tabular-nums}
+.kb{margin:12px 0 0;font:700 14px Nunito;color:#f2d06a}
+.knote{margin:16px auto 0;font:600 14.5px/1.6 Nunito;opacity:.85;max-width:300px}
+.alamfx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.alamfx i{position:absolute;inset:0;mix-blend-mode:multiply;background:#fff}
+.alamfx canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#rMapV{position:relative}
+#garda .alamfx{z-index:1}
+body.ada-ingat .toast{top:calc(max(10px,env(safe-area-inset-top)) + 172px)}
+@media (prefers-reduced-motion:reduce){.alamp.hot,.singat svg,.kbintang{animation:none}}
