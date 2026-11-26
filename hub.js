@@ -236,13 +236,13 @@ function openPeta(){const mt=maxTier(),admin=NET.demo||(NET.me&&NET.me.peran==='
   const P_=NET.P||{nama:'Mode coba',tipe:'demo'},banyakAnak=NET.me&&NET.me.peran==='wali'&&NET.me.anak.length>1;
   sheet(head('Peta kekuasaan','6 tingkat · 5 juz per tingkat')+`<div class="sb">
   <div class="li" style="margin-bottom:10px"><div><b>${esc(P_.nama)}</b><small>${P_.tipe==='santri'?`${MAXJ} juz sudah disetorkan`:P_.tipe==='asatidz'?'Ustadz/Ustadzah · 30 juz':'Mode coba tanpa akun'}</small></div></div>
-  <div class="row" style="margin-bottom:12px"><button class="btn b-gold" id="pRank">Papan peringkat</button>${banyakAnak?'<button class="btn b-soft" id="pGanti">Ganti ananda</button>':''}${NET.demo?'':'<button class="btn b-soft" id="pOut">Keluar</button>'}</div>
+  <div class="row" style="margin-bottom:12px"><button class="btn b-gold" id="pRank">Papan peringkat</button>${banyakAnak?'<button class="btn b-soft" id="pGanti">Ganti ananda</button>':''}${typeof bisaPasang==='function'&&bisaPasang()?'<button class="btn b-soft" id="pPasang">Pasang di HP</button>':''}${NET.demo?'':'<button class="btn b-soft" id="pOut">Keluar</button>'}</div>
   <div class="list">${rows}</div>
   <p class="note" style="margin-bottom:8px">Bangunan di tingkat lama tetap memudar, jadi kunjungi lagi untuk murajaah.</p>
   ${admin?`<div class="list"><div class="li"><div><b>Uji coba (khusus admin)</b><small>Untuk mencoba alur tanpa menunggu</small></div></div></div>
   <div class="row"><button class="btn b-soft" id="uDay">Lewati 1 hari</button><button class="btn b-soft" id="uAll">Kuasai semua wilayah tingkat ini</button><button class="btn b-soft" id="uNext">Buka tingkat berikutnya</button><button class="btn b-soft" id="uReset">Mulai dari awal</button></div>`:''}</div>`);
   $('sheet').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>viewTier(+b.dataset.v));
-  $('pRank').onclick=openPeringkat;if($('pOut'))$('pOut').onclick=netKeluar;if($('pGanti'))$('pGanti').onclick=()=>{netSimpanSekarang();closeSheet();routeMe(NET.me)};
+  $('pRank').onclick=openPeringkat;if($('pPasang'))$('pPasang').onclick=()=>{closeSheet();pasangApp()};if($('pOut'))$('pOut').onclick=netKeluar;if($('pGanti'))$('pGanti').onclick=()=>{netSimpanSekarang();closeSheet();routeMe(NET.me)};
   if(!admin)return;
   $('uDay').onclick=()=>{S.skip++;save();toast('Satu hari berlalu tanpa murajaah. Bangunan mulai memudar.');closeSheet()};
   $('uAll').onclick=()=>{tierJuz(S.view).forEach(j=>S.t[j]={open:1,own:1});save();hud();closeSheet();toast('Semua wilayah tingkat ini dikuasai (uji coba).')};
