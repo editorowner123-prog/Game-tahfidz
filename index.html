@@ -93,7 +93,10 @@
 <section id="hub" class="screen">
   <canvas id="cv" aria-label="Peta wilayah Benteng Huffazh"></canvas>
   <div class="hud">
-    <button class="pill" id="tierP"><span class="ic"><svg><use href="#i-masjid"/></svg></span><span><span id="tierT">Desa</span><small id="tierS"></small></span></button>
+    <div class="hl">
+      <button class="pill" id="tierP"><span class="ic"><svg><use href="#i-masjid"/></svg></span><span><span id="tierT">Desa</span><small id="tierS"></small></span></button>
+      <button class="pill alamp" id="alamP" aria-label="Cuaca dan waktu sholat"><span class="aic" id="alamIc"></span><span><span id="alamT">--.--</span><small id="alamS">Sholat</small></span></button>
+    </div>
     <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><div class="pill" id="pasP"><svg><use href="#i-troop"/></svg><span id="pas">0</span></div></div>
   </div>
   <button class="btn b-gold lvup" id="lvUp" hidden></button>
@@ -170,6 +173,19 @@
 <section class="sheet" id="sheet" aria-label="Info"></section>
 <section class="sheet q" id="qs" aria-label="Soal murajaah"><div class="shead"><div class="t" id="qT"></div><div class="dots" id="qD"></div><button class="x" id="qX" aria-label="Tutup">×</button></div><div class="sb" id="qb"></div></section>
 <div class="modal" id="modal"><div class="mcard" id="mc"></div></div>
+<div class="singat" id="sIngat" role="status" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.6L4.4 16h15.2L18 12.6V9a6 6 0 0 0-6-6zM9.5 18.5a2.5 2.5 0 0 0 5 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><span><b id="sIngatT"></b><small id="sIngatS"></small></span></div>
+<section class="kunci" id="kunci" role="alertdialog" aria-modal="true" aria-labelledby="kT" hidden>
+  <div class="kbintang" aria-hidden="true"></div>
+  <div class="kw">
+    <svg class="kmasjid" viewBox="0 0 160 120" aria-hidden="true"><path d="M118 18a14 14 0 1 0 12 20.5 11 11 0 1 1-12-20.5z" fill="#f2d06a"/><path d="M28 112V62h104v50z" fill="#fdf3df"/><path d="M48 62c0-22 14-34 32-40 18 6 32 18 32 40z" fill="#f2c24e"/><path d="M80 22V8" stroke="#f2c24e" stroke-width="3" stroke-linecap="round"/><path d="M14 112V44h12v68zM134 112V44h12v68z" fill="#f3e2c0"/><path d="M12 46l8-14 8 14zM132 46l8-14 8 14z" fill="#c45a68"/><path d="M68 112V90a12 12 0 0 1 24 0v22z" fill="#ffcf73"/><path d="M42 78a5 5 0 0 1 10 0v10H42zM108 78a5 5 0 0 1 10 0v10h-10z" fill="#ffcf73"/></svg>
+    <p class="kpre">Waktunya sholat</p>
+    <h1 id="kT">Sholat</h1>
+    <p class="kjam" id="kJ"></p>
+    <div class="kcd" id="kCd">20:00</div>
+    <p class="kb" id="kB"></p>
+    <p class="knote">Game istirahat sebentar. Ayo ambil wudhu dan sholat dulu. Progresmu sudah tersimpan.</p>
+  </div>
+</section>
 <div class="toast" id="toast" role="status"></div>
 <div class="count" id="count" hidden></div>
 <div class="load" id="load">Benteng Huffazh<small id="loadS">Menyiapkan wilayah…</small></div>
@@ -181,6 +197,8 @@
 <script src="garda.js"></script>
 <script src="net.js"></script>
 <script src="pwa.js"></script>
+<script src="sholat.js"></script>
+<script src="cuaca.js"></script>
 <script>boot()</script>
 </body>
 </html>
