@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Benteng Huffazh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gK" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe2b4"/><stop offset="1" stop-color="#8fae78"/></linearGradient>
+  <radialGradient id="gW" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#b79ae0"/><stop offset="1" stop-color="#6a4f9a"/></radialGradient>
+  <linearGradient id="gG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a96cc"/><stop offset="1" stop-color="#4a5488"/></linearGradient>
+  <linearGradient id="gT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a85a72"/><stop offset="1" stop-color="#5a2438"/></linearGradient>
+  <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c65a6a"/><stop offset="1" stop-color="#963848"/></linearGradient>
+  <symbol id="hero" viewBox="0 0 90 120">
+    <ellipse cx="42" cy="114" rx="30" ry="6" fill="rgba(60,40,30,.18)"/>
+    <rect x="28" y="84" width="12" height="27" rx="6" fill="#5a4038"/><rect x="44" y="84" width="12" height="27" rx="6" fill="#5a4038"/>
+    <rect x="23" y="107" width="18" height="7" rx="3.5" fill="#7a5038"/><rect x="43" y="107" width="18" height="7" rx="3.5" fill="#7a5038"/>
+    <path d="M22 48Q41 38 60 48L66 94Q41 102 16 94Z" fill="url(#gR)"/>
+    <rect x="18" y="68" width="46" height="8" rx="4" fill="#f0c85a"/>
+    <path d="M26 43Q41 52 56 43L54 52Q41 58 28 52Z" fill="#fff6e4"/>
+    <path d="M25 50L58 82" stroke="#9a6a48" stroke-width="4" stroke-linecap="round"/><rect x="49" y="76" width="18" height="14" rx="5" fill="#c08a5a"/>
+    <circle cx="41" cy="27" r="16" fill="#f3c9a0"/>
+    <path d="M25 22Q25 8 41 8Q57 8 57 22L57 25L25 25Z" fill="#33323f"/><rect x="25" y="21" width="32" height="5" rx="2.5" fill="#4a4858"/>
+    <circle cx="48" cy="29" r="2.2" fill="#3a2418"/><circle cx="51" cy="34" r="3" fill="#f6a8a0" opacity=".55"/>
+    <path d="M44 36q3.5 2.5 7 0" stroke="#9a5a3a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <line x1="80" y1="20" x2="66" y2="114" stroke="#b07a48" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="80" cy="17" r="8" fill="#ffe28a" stroke="#e0aa3a" stroke-width="2"/>
+    <path d="M55 54L70 67" stroke="#b04a5a" stroke-width="11" stroke-linecap="round"/><circle cx="71" cy="68" r="6" fill="#f3c9a0"/>
+  </symbol>
+  <symbol id="m-kasal" viewBox="0 0 120 130">
+    <ellipse cx="60" cy="124" rx="46" ry="7" fill="rgba(60,40,30,.16)"/>
+    <path d="M10 120Q4 58 60 40Q116 58 110 120Q60 128 10 120Z" fill="url(#gK)"/>
+    <ellipse cx="42" cy="62" rx="15" ry="8" fill="rgba(255,255,255,.4)"/>
+    <path d="M36 84q8 7 16 0M68 84q8 7 16 0" stroke="#4a5a38" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <circle cx="34" cy="96" r="6" fill="#f6a8a0" opacity=".45"/><circle cx="86" cy="96" r="6" fill="#f6a8a0" opacity=".45"/>
+    <ellipse cx="60" cy="102" rx="8" ry="5" fill="#5a6a48"/>
+    <path d="M40 46Q58 8 88 30Q74 34 70 46Z" fill="#8ab0e0"/><path d="M48 39l6-8M58 33l6-8M68 29l6-6" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="90" cy="30" r="7" fill="#fff"/>
+    <text x="98" y="24" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="18" fill="#fff" class="float">z</text>
+  </symbol>
+  <symbol id="m-waswas" viewBox="0 0 140 130">
+    <ellipse cx="70" cy="124" rx="32" ry="6" fill="rgba(60,40,30,.16)"/>
+    <path d="M70 70Q34 18 4 58Q26 54 30 76Q42 60 56 82Z" fill="#7a5fb0"/><path d="M70 70Q106 18 136 58Q114 54 110 76Q98 60 84 82Z" fill="#7a5fb0"/>
+    <circle cx="70" cy="78" r="32" fill="url(#gW)"/>
+    <path d="M46 56L42 28L60 50ZM94 56L98 28L80 50Z" fill="#8a6ac0"/>
+    <ellipse cx="58" cy="74" rx="8" ry="10" fill="#fff"/><ellipse cx="82" cy="74" rx="8" ry="10" fill="#fff"/>
+    <circle cx="60" cy="76" r="4.5" fill="#d0405a"/><circle cx="84" cy="76" r="4.5" fill="#d0405a"/>
+    <path d="M60 92q10 7 20 0" stroke="#3a2458" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M63 94l3 5 3-4M71 95l3 4 3-5" fill="#fff"/>
+  </symbol>
+  <symbol id="m-ghaflah" viewBox="0 0 120 130">
+    <ellipse cx="60" cy="124" rx="38" ry="6" fill="rgba(60,40,30,.16)"/>
+    <path d="M60 14Q104 34 106 100Q98 116 88 104Q78 120 68 104Q58 120 48 104Q38 120 28 104Q18 116 14 100Q16 34 60 14Z" fill="url(#gG)"/>
+    <ellipse cx="60" cy="62" rx="25" ry="28" fill="#262a4a"/>
+    <ellipse cx="50" cy="60" rx="6" ry="8" fill="#ffe28a"/><ellipse cx="70" cy="60" rx="6" ry="8" fill="#ffe28a"/>
+    <path d="M30 40Q60 22 90 40" stroke="#a8b2e0" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="m-takabbur" viewBox="0 0 160 160">
+    <ellipse cx="80" cy="154" rx="60" ry="8" fill="rgba(60,40,30,.2)"/>
+    <rect x="44" y="118" width="26" height="34" rx="12" fill="#5a2438"/><rect x="90" y="118" width="26" height="34" rx="12" fill="#5a2438"/>
+    <path d="M22 72Q8 104 22 124" stroke="#7a3450" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M138 72Q152 104 138 124" stroke="#7a3450" stroke-width="20" stroke-linecap="round" fill="none"/>
+    <rect x="28" y="44" width="104" height="90" rx="36" fill="url(#gT)"/>
+    <path d="M44 48Q30 22 40 8Q46 28 60 42ZM116 48Q130 22 120 8Q114 28 100 42Z" fill="#fff3e0"/>
+    <path d="M54 46L58 24L70 38L80 20L90 38L102 24L106 46Z" fill="#f6cf55" stroke="#d09a2a" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M52 72l18 6M108 72l-18 6" stroke="#ffd08a" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="64" cy="84" rx="8" ry="6" fill="#fff"/><ellipse cx="96" cy="84" rx="8" ry="6" fill="#fff"/><circle cx="64" cy="85" r="3.5" fill="#c0304a"/><circle cx="96" cy="85" r="3.5" fill="#c0304a"/>
+    <path d="M64 106q16-9 32 0" stroke="#ffb0a0" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-sword" viewBox="0 0 24 24"><path d="M14 3h7v7L10 21l-3-3z" fill="#fff"/><path d="M4 16l4 4M3 21l3-3" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="#fff"/></symbol>
+  <symbol id="i-heal" viewBox="0 0 24 24"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z" fill="#fff"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z" fill="#5a3510"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#f8d45e" stroke="#d6a032" stroke-width="2"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#e2b444" stroke-width="2"/></symbol>
+  <symbol id="i-troop" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="#6aa0e0"/><path d="M12 6v11M8 10h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-masjid" viewBox="0 0 32 32"><path d="M6 28V17h20v11z" fill="#fffaf0"/><path d="M9 17c0-5 3-8 7-10 4 2 7 5 7 10z" fill="#f8d45e"/><path d="M16 3v4" stroke="#f8d45e" stroke-width="2"/><path d="M14 28v-6a2 2 0 0 1 4 0v6z" fill="#c45a68"/><path d="M3 28V12h3v16zM26 28V12h3v16z" fill="#fff3e0"/></symbol>
+</defs></svg>
+
+<section id="hub" class="screen">
+  <canvas id="cv" aria-label="Peta wilayah Benteng Huffazh"></canvas>
+  <div class="hud">
+    <button class="pill" id="tierP"><span class="ic"><svg><use href="#i-masjid"/></svg></span><span><span id="tierT">Desa</span><small id="tierS"></small></span></button>
+    <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><div class="pill" id="pasP"><svg><use href="#i-troop"/></svg><span id="pas">0</span></div></div>
+  </div>
+  <button class="btn b-gold lvup" id="lvUp" hidden></button>
+  <nav class="dock" id="dock">
+    <button class="dk" id="dR"><span class="i" style="background:linear-gradient(#f0a070,#d06a5c)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="#fff"/></svg></span>Rihlah<small>buka wilayah</small></button>
+    <button class="dk" id="dD"><span class="i" style="background:linear-gradient(#7db8f0,#4a86d0)"><svg viewBox="0 0 24 24"><path d="M4 4l9 9M20 4l-9 9M6 18l3-3M18 18l-3-3M4 20l3-3M20 20l-3-3" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>Duel<small>rebut wilayah</small></button>
+    <button class="dk" id="dG"><span class="i" style="background:linear-gradient(#b18ae0,#7a56c0)"><svg viewBox="0 0 24 24"><path d="M9 4h6l-1 2h-4z" fill="#fff"/><rect x="7" y="6" width="10" height="13" rx="3" fill="#fff"/><circle cx="12" cy="12.5" r="3" fill="#ffd84d"/></svg></span>Garda<small>perkuat pasukan</small></button>
+    <button class="dk" id="dP"><span class="i" style="background:linear-gradient(#8fdc72,#55b447)"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="#fff" stroke-width="2"/></svg></span>Peta<small>semua tingkat</small></button>
+  </nav>
+</section>
+
+<section id="rihlah" class="screen" hidden>
+  <div class="mbar"><button class="back" id="rBack" aria-label="Kembali">←</button><div class="t" id="rT">Rihlah</div><div style="width:min(38vw,150px)"><span class="hb" id="rLv" style="font-size:14px">Lv 1</span><div class="mini"><i id="rHp" style="background:#ffd08a"></i></div><div class="mini"><i id="rXp" style="background:#c8f0a0"></i></div></div></div>
+  <div class="rv" id="rMapV"><div class="mapw" id="rMapW"><svg id="rSvg" role="img" aria-label="Peta perjalanan"></svg></div></div>
+  <div class="rv" id="rBatV" hidden>
+    <div class="stage" id="stage"><svg id="bsvg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMax slice"></svg>
+      <div class="bh"><div class="cd"><span id="hName">Santri</span><small id="hHpT"></small><div class="mini hpb"><i id="hHp"></i></div></div><div class="cd e"><span id="eName"></span><small id="eHpT"></small><div class="mini epb"><i id="eHp"></i></div></div></div></div>
+    <div class="panelb"><div class="log" id="log" role="status"></div>
+      <div class="cmds">
+        <button class="btn b-maroon cmd" data-c="serang"><span><svg><use href="#i-sword"/></svg>Serang</span><small>Sambung ayat</small></button>
+        <button class="btn b-teal cmd" data-c="lindung"><span><svg><use href="#i-shield"/></svg>Lindung</span><small>Lengkapi kata</small></button>
+        <button class="btn b-green cmd" data-c="pulih"><span><svg><use href="#i-heal"/></svg>Pulih</span><small>Susun ayat</small></button>
+        <button class="btn b-gold cmd" data-c="pam" id="cPam"><span><svg><use href="#i-star"/></svg>Pamungkas</span><small id="pamS">Rantai ayat</small></button>
+      </div>
+      <button class="flee" id="bFlee">Mundur ke peta perjalanan</button></div>
+  </div>
+</section>
+
+<section id="duel" class="screen" hidden>
+  <div class="mbar"><button class="back" id="dBack" aria-label="Keluar">←</button><div class="t" id="dT">Duel<small id="dS"></small><div class="mini" style="width:min(150px,36vw)"><i id="oProg" style="background:#cfe6ff"></i></div></div><div class="timer" id="timer">3:00</div></div>
+  <div class="arena" id="arena"><canvas id="dcv" aria-label="Arena duel"></canvas></div>
+  <div class="board"><div class="done" id="done"></div><div class="tg"><span id="tgT">Bersiap…</span><small id="tgS"></small></div><div class="slots" id="slots"></div><div class="hand" id="hand"></div></div>
+</section>
+
+<section id="garda" class="screen" hidden>
+  <canvas id="gl" aria-label="Arena Garda"></canvas>
+  <div id="gtouch"></div>
+  <div class="ghud" id="ghud">
+    <div class="gtop">
+      <div style="display:flex;gap:8px;align-items:flex-start"><button class="gback" id="gBack" aria-label="Kembali">←</button><div class="gp hp">Nyawa <span id="gHpT">100</span><div class="mini"><i id="gHp" style="width:100%"></i></div></div></div>
+      <div class="gp" style="text-align:center"><span id="gWv">Gelombang 1/3</span><small id="gWs"></small></div>
+      <div class="gp sc"><span id="gPas">+0</span><small>pasukan</small><div class="stk" id="gStk"><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="boss" id="gBoss" hidden>Ghaflah Agung<div class="mini"><i id="gBossI" style="width:100%"></i></div><small id="gBossS"></small></div>
+    <div class="cross"></div><div class="vig" id="gVig"></div><div class="flash" id="gFlash"></div>
+    <div class="banner" id="gBan"><b id="gBanB"></b><span id="gBanS"></span></div>
+  </div>
+  <div class="ctrl off" id="gCtrl">
+    <div class="stick" id="gStick"><i id="gKnob"></i></div>
+    <div class="ammo" id="gAmmo"></div>
+    <button class="btn b-gold gspec" id="gSpec" hidden>Nur Agung</button>
+    <button class="btn b-plum gload" id="gLoad">Isi Nur</button>
+    <button class="fire" id="gFire" aria-label="Tembak Nur"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 8h12l-2 4h-8z" fill="#9a6a28"/><rect x="15" y="12" width="18" height="24" rx="5" fill="#fffbe6" stroke="#9a6a28" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#ffb020"/><path d="M13 38h22" stroke="#9a6a28" stroke-width="4" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<section id="gate" class="gate" hidden>
+  <div class="gw">
+    <div class="glogo"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#i-masjid"/></svg></div>
+    <h1>Benteng Huffazh</h1>
+    <p class="gsub">Game murajaah PPTQ Al Azzaam</p>
+    <form class="gcard" id="gLogin" hidden><h2>Masuk</h2><p class="gnote">Pakai akun Al-Hafizh: akun <b>Wali Santri</b> untuk ananda, atau akun <b>Ustadz/Ustadzah</b>.</p>
+      <label>Username<input id="gUser" autocomplete="username" autocapitalize="none" required></label>
+      <label>Kata sandi<input id="gPass" type="password" autocomplete="current-password" required></label>
+      <p class="gerr" id="gLoginMsg" role="alert"></p><button class="btn b-green wide" id="gBtn" type="submit">Masuk</button>
+      <p class="gnote">Lupa kata sandi? Ajukan lewat <a href="https://tahfidzalazzaam.com">aplikasi Al-Hafizh</a>.</p></form>
+    <div class="gcard" id="gPick" hidden><h2>Siapa yang bermain?</h2><p class="gnote">Progres disimpan untuk masing-masing ananda.</p><div class="list" id="gPickList"></div><button class="btn b-soft wide" data-keluar>Keluar</button></div>
+    <div class="gcard" id="gClosed" hidden><h2>Game belum dibuka</h2><p class="gnote" id="gClosedMsg"></p><button class="btn b-soft wide" data-keluar>Keluar</button></div>
+    <div class="gcard" id="gNo" hidden><h2>Belum bisa bermain</h2><p class="gnote" id="gNoMsg"></p><button class="btn b-soft wide" data-keluar>Keluar</button></div>
+    <div class="gcard" id="gWait" hidden><p class="gnote" id="gWaitMsg">Memuat…</p></div>
+  </div>
+</section>
+<section class="sheet" id="sheet" aria-label="Info"></section>
+<section class="sheet q" id="qs" aria-label="Soal murajaah"><div class="shead"><div class="t" id="qT"></div><div class="dots" id="qD"></div><button class="x" id="qX" aria-label="Tutup">×</button></div><div class="sb" id="qb"></div></section>
+<div class="modal" id="modal"><div class="mcard" id="mc"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="count" id="count" hidden></div>
+<div class="load" id="load">Benteng Huffazh<small id="loadS">Menyiapkan wilayah…</small></div>
+
+<script src="core.js"></script>
+<script src="hub.js"></script>
+<script src="rihlah.js"></script>
+<script src="duel.js"></script>
+<script src="garda.js"></script>
+<script src="net.js"></script>
+<script>boot()</script>
+</body>
+</html>
