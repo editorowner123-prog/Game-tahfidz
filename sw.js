@@ -4,12 +4,12 @@
    Data juz disimpan permanen di HP (isinya tidak pernah berubah) supaya hemat kuota.
    Panggilan ke Supabase (login, simpan progres) tidak pernah disimpan.
    Naikkan VERSI hanya kalau file ini sendiri atau daftar INTI berubah. */
-const VERSI = 'bh-inti-2';
+const VERSI = 'bh-inti-3';
 const DATA = 'bh-data-1';
 const LUAR = 'bh-luar-1';
 const INTI = [
   './', 'index.html', 'style.css', 'config.js', 'core.js', 'hub.js', 'rihlah.js', 'duel.js', 'garda.js',
-  'net.js', 'pwa.js', 'manifest.json', 'data/surah.json',
+  'net.js', 'pwa.js', 'sholat.js', 'cuaca.js', 'manifest.json', 'data/surah.json',
   'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'favicon-32.png'
 ];
 const LUAR_OK = ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
@@ -65,4 +65,13 @@ self.addEventListener('fetch', e => {
   // Pustaka dan font dari CDN memakai alamat bernomor versi, jadi aman disimpan permanen.
   if (LUAR_OK.includes(url.hostname)) return e.respondWith(cacheDulu(LUAR, req));
   // Selain itu (termasuk Supabase) dibiarkan langsung ke internet.
+});
+
+// Ketuk notifikasi pengingat sholat: buka/fokuskan game.
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(cs => {
+    for (const c of cs) if ('focus' in c) return c.focus();
+    return self.clients.openWindow('./');
+  }));
 });
