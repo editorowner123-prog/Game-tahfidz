@@ -2,8 +2,18 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Benteng Huffazh</title>
+<meta name="description" content="Game murajaah hafalan Al-Qur'an PPTQ Al Azzaam">
+<meta name="theme-color" content="#5a1424">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Huffazh">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -142,7 +152,7 @@
 
 <section id="gate" class="gate" hidden>
   <div class="gw">
-    <div class="glogo"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#i-masjid"/></svg></div>
+    <img class="glogo" src="icons/icon-192.png" alt="" width="96" height="96">
     <h1>Benteng Huffazh</h1>
     <p class="gsub">Game murajaah PPTQ Al Azzaam</p>
     <form class="gcard" id="gLogin" hidden><h2>Masuk</h2><p class="gnote">Pakai akun Al-Hafizh: akun <b>Wali Santri</b> untuk ananda, atau akun <b>Ustadz/Ustadzah</b>.</p>
@@ -154,6 +164,7 @@
     <div class="gcard" id="gClosed" hidden><h2>Game belum dibuka</h2><p class="gnote" id="gClosedMsg"></p><button class="btn b-soft wide" data-keluar>Keluar</button></div>
     <div class="gcard" id="gNo" hidden><h2>Belum bisa bermain</h2><p class="gnote" id="gNoMsg"></p><button class="btn b-soft wide" data-keluar>Keluar</button></div>
     <div class="gcard" id="gWait" hidden><p class="gnote" id="gWaitMsg">Memuat…</p></div>
+    <button class="gpasang" id="gPasang" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10M7.5 9.5L12 14l4.5-4.5M5 17v1.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Pasang di HP sebagai aplikasi</button>
   </div>
 </section>
 <section class="sheet" id="sheet" aria-label="Info"></section>
@@ -169,6 +180,7 @@
 <script src="duel.js"></script>
 <script src="garda.js"></script>
 <script src="net.js"></script>
+<script src="pwa.js"></script>
 <script>boot()</script>
 </body>
 </html>
