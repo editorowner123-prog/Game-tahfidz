@@ -165,6 +165,9 @@ function frameHub(ms){const t=ms/1000,dt=Math.min(.05,t-(frameHub.t||t));frameHu
     else{const [x,y]=P(o.i,o.j);line(ctx,[[x,y],[x,y-24]],'#7a5a48',2.4);ctx.fillStyle='#7a5a48';ctx.fillRect(x-4,y-30,8,7);const a=.45+.2*Math.sin(T*3+o.i);const gl=ctx.createRadialGradient(x,y-27,1,x,y-27,13);gl.addColorStop(0,`rgba(255,226,130,${a+.3})`);gl.addColorStop(1,'rgba(255,226,130,0)');ctx.fillStyle=gl;ctx.beginPath();ctx.arc(x,y-27,13,0,7);ctx.fill();ctx.fillStyle='#fff0b0';ctx.fillRect(x-2.5,y-29,5,4.5)}}
   for(const q of parts){const a=q.l/q.m;if(q.t){ctx.font=`800 ${18/cam.z}px 'Baloo 2',sans-serif`;ctx.textAlign='center';ctx.lineWidth=4/cam.z;ctx.strokeStyle=`rgba(255,255,255,${a})`;ctx.globalAlpha=a;ctx.strokeText(q.t,q.x,q.y);ctx.fillStyle=q.c;ctx.fillText(q.t,q.x,q.y);ctx.globalAlpha=1}
     else{ctx.globalAlpha=q.sm?a*.4:a;ctx.fillStyle=q.c;ctx.beginPath();ctx.arc(q.x,q.y,q.sm?q.s*(2-a):q.s,0,7);ctx.fill();ctx.globalAlpha=1}}
+  if(window.alamHub){const lampu=[];for(const l of lamps){const [x,y]=P(l.i,l.j);lampu.push([x,y-27,48,1])}{const [x,y]=P(masjid.gi+2,masjid.gj+2);lampu.push([x,y-46,118,.75])}
+    for(const tr of terr){if(tstate(tr)!=='own')continue;for(const p of tr.plots){const b=bget(p.j,p.q);if(b&&b.lv){const [x,y]=P(p.gi+1,p.gj+1);lampu.push([x,y-20,40+b.lv*6,.5])}}}
+    alamHub(ctx,cv.width,cv.height,dpr,dt,()=>ctx.setTransform(z,0,0,z,cv.width/2-cam.x*z,cv.height/2-cam.y*z),lampu)}
   ctx.setTransform(dpr,0,0,dpr,0,0);
   const nl=nextLocked(S.view);
   for(const tr of terr){const st=tstate(tr),[wx,wy]=P(tr.i0+5.4,tr.j0+5.4),[sx,sy]=w2s(wx,wy);if(sx<-120||sx>W+120||sy<-60||sy>H+60)continue;
@@ -281,4 +284,4 @@ $('dD').onclick=()=>{const j=nextRival(S.view);if(!j){toast(nextLocked(S.view)?'
 $('dG').onclick=()=>{const own=terr.filter(t=>tstate(t)==='own');const rows=own.map(t=>{const bs=t.plots.filter(p=>bget(p.j,p.q)&&bget(p.j,p.q).lv),avg=bs.length?Math.round(bs.reduce((a,p)=>a+str(p.j,p.q),0)/bs.length):0;return`<div class="li"><div><b>Juz ${t.j}</b><small>${bs.length}/4 berdiri${bs.length?` · rata-rata ${avg}%`:''}</small></div><button class="btn b-plum" data-j="${t.j}">Garda</button></div>`}).join('');
   sheet(head('Garda Hafizh','Pilih wilayah yang dijaga')+`<div class="sb"><p class="p">Ghaflah menyerbu wilayah yang kamu pilih. Tiap Ghaflah yang dikalahkan menjadi <b>1 pasukan</b> untuk Duel, dan tiap jawaban benar memperkuat bangunan wilayah itu.</p><div class="list">${rows}</div></div>`);
   $('sheet').querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>startGarda(+b.dataset.j))};
-$('dP').onclick=openPeta;$('tierP').onclick=openMasjid;$('lvUp').onclick=tierUp;
+$('dP').onclick=openPeta;$('tierP').onclick=openMasjid;$('alamP').onclick=()=>{if(window.alamBuka)alamBuka()};$('lvUp').onclick=tierUp;
