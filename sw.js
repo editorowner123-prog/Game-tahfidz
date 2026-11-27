@@ -4,7 +4,7 @@
    Data juz disimpan permanen di HP (isinya tidak pernah berubah) supaya hemat kuota.
    Panggilan ke Supabase (login, simpan progres) tidak pernah disimpan.
    Naikkan VERSI hanya kalau file ini sendiri atau daftar INTI berubah. */
-const VERSI = 'bh-inti-5';
+const VERSI = 'bh-inti-6';
 const DATA = 'bh-data-1';
 const LUAR = 'bh-luar-1';
 const INTI = [
@@ -36,15 +36,15 @@ async function cacheDulu(nama, req) {
   return simpanKe(nama, req, await fetch(req));
 }
 
-// Ambil dari internet dulu (cek versi terbaru); kalau gagal atau lebih dari 4 detik, pakai salinan di HP.
+// Ambil dari internet dulu (cek versi terbaru); kalau tidak ada koneksi, pakai salinan di HP.
 async function internetDulu(req, cadangan) {
   const salinan = () => caches.match(req, { ignoreSearch: true }).then(r => r || (cadangan ? caches.match(cadangan) : undefined));
   try {
-    const ambil = fetch(req, { cache: 'no-cache' }).then(r => simpanKe(VERSI, req, r));
-    ambil.catch(() => {});
-    const r = await Promise.race([ambil, new Promise(res => setTimeout(() => res(null), 4000))]);
-    if (r) return r;
-    return (await salinan()) || await ambil;
+    // Tunggu jawaban server (tanpa batas waktu) supaya semua berkas selalu dari versi yang sama;
+    // salinan di HP hanya dipakai bila benar-benar tidak ada koneksi.
+    const r = await fetch(req, { cache: 'no-cache' });
+    if (r.ok || r.type === 'opaque') return simpanKe(VERSI, req, r);
+    return (await salinan()) || r;
   } catch (err) {
     const r = await salinan();
     if (r) return r;
