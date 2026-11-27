@@ -18,6 +18,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Penjaga pemuatan: bila game belum tampil dalam 15 detik atau ada kesalahan, tampilkan sebabnya dan tombol muat ulang. */
+(function(){var E=[];
+function tampil(){var l=document.getElementById('load'),s=document.getElementById('loadS');if(!l||l.hidden||!s||document.getElementById('ldR'))return;
+  s.innerHTML='Belum berhasil dimuat.'+(E.length?'<br><span class="lderr">'+E.slice(0,3).map(function(x){return String(x).replace(/</g,'&lt;').slice(0,140)}).join('<br>')+'</span>':'<br><span class="lderr">Koneksi lambat atau berkas belum lengkap.</span>')+'<br><button id="ldR" class="ldb">Muat ulang</button><button id="ldB" class="ldb">Bersihkan salinan &amp; muat ulang</button>';
+  document.getElementById('ldR').onclick=function(){location.reload()};
+  document.getElementById('ldB').onclick=function(){var p=[];if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister()}))}));if(window.caches)p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}));Promise.all(p).then(function(){location.reload()},function(){location.reload()})}}
+addEventListener('error',function(e){var t=e.target;if(t&&t!==window&&(t.src||t.href)){E.push('Berkas tidak ditemukan: '+String(t.src||t.href).split('/').pop())}else if(e.message){E.push(e.message+' ('+String(e.filename||'').split('/').pop()+':'+e.lineno+')')}setTimeout(tampil,2500)},true);
+addEventListener('unhandledrejection',function(e){E.push(String(e.reason&&e.reason.message||e.reason));setTimeout(tampil,2500)});
+setTimeout(tampil,15000);window.__bhErr=E})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
 <script src="config.js"></script>
 </head>
