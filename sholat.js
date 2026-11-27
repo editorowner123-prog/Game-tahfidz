@@ -96,6 +96,7 @@ function sholatNotif(judul, isi) {
 
 /* ---- kunci & pengingat ---- */
 function sholatKeluarMode() {
+  if (window.misiTutupSemua) misiTutupSemua();
   $('modal').classList.remove('on');
   if (typeof closeQ === 'function') closeQ();
   document.querySelectorAll('.sheet').forEach(s => s.classList.remove('on'));
