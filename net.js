@@ -9,7 +9,7 @@ async function netLogin(u,p){const {error}=await NET.sb.auth.signInWithPassword(
 async function netKeluar(){try{await netSimpanSekarang()}catch(e){}if(NET.sb)await NET.sb.auth.signOut({scope:'local'});try{localStorage.removeItem('bh-pemain')}catch(e){}location.reload()}
 const netSaya=async()=>(NET.me=await netRpc('game_saya'));
 const netMuat=(t,i)=>netRpc('game_muat',{p_tipe:t,p_id:i});
-function skorGame(){let own=0,lv=0;for(const j of ORDER){if(owned(j))own++;for(let q=0;q<4;q++){const b=bget(j,q);if(b&&b.lv)lv+=b.lv}}return S.tier*500+own*100+lv*20+(S.hero?S.hero.lv*10:0)}
+function skorGame(){let own=0,lv=0;for(const j of ORDER){if(owned(j))own++;for(let q=0;q<4;q++){const b=bget(j,q);if(b&&b.lv)lv+=b.lv}}return S.tier*500+own*100+lv*20+(S.hero?S.hero.lv*10:0)+(S.poin||0)}
 function netSimpanNanti(){if(NET.demo||!NET.P)return;NET.pending=true;clearTimeout(NET.timer);NET.timer=setTimeout(netSimpanSekarang,4000)}
 async function netSimpanSekarang(){if(NET.demo||!NET.P||!NET.pending||NET.closed)return;if(NET.saving){clearTimeout(NET.timer);NET.timer=setTimeout(netSimpanSekarang,2000);return}
   NET.saving=true;NET.pending=false;const own=ORDER.filter(owned).length,bld=ORDER.reduce((n,j)=>n+[0,1,2,3].filter(q=>bget(j,q)&&bget(j,q).lv).length,0);
