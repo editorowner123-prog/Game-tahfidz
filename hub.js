@@ -234,7 +234,7 @@ function hitTest(sx,sy){const [wx,wy]=s2w(sx,sy);let best=null,bd=-1;
 function tap(x,y){if(qOpenFlag)return;const h=hitTest(x,y);if(h==='masjid')openMasjid();else if(h&&h.terr)openTerr(h.terr);else if(h&&h.tet)bukaTetangga(h.tet);else if(h)openPlot(h);else closeSheet()}
 
 /* ---------- HUD & lembar ---------- */
-function hud(pop){$('gold').textContent=S.gold;$('pas').textContent=S.pas;const v=S.view,own=tierJuz(v).filter(owned).length;$('tierT').textContent=window.judulDesa?judulDesa(v):TIERS[v].nm;if($('lvB'))$('lvB').textContent=window.levelSaya?levelSaya():1;$('tierS').textContent=`${tierRange(v)} · ${own}/5 wilayah`;
+function hud(pop){$('gold').textContent=S.gold;$('pas').textContent=S.pas;if(window.misiBadge)misiBadge();const v=S.view,own=tierJuz(v).filter(owned).length;$('tierT').textContent=window.judulDesa?judulDesa(v):TIERS[v].nm;if($('lvB'))$('lvB').textContent=window.levelSaya?levelSaya():1;$('tierS').textContent=`${tierRange(v)} · ${own}/5 wilayah`;
   if(pop){const g=$(pop);g.classList.remove('pop');void g.offsetWidth;g.classList.add('pop')}
   const up=v===S.tier&&S.tier<maxTier()&&tierDone(v);$('lvUp').hidden=!up;if(up)$('lvUp').textContent=`Naik ke ${TIERS[v+1].nm}`;
   const nl=nextLocked(v),rok=!!nl&&juzOk(nl);$('dR').classList.toggle('hot',rok);$('dR').classList.toggle('dim',!rok);$('dD').classList.toggle('hot',!!nextRival(v));$('dD').classList.toggle('dim',!nextRival(v))}
