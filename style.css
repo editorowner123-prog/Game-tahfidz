@@ -374,3 +374,7 @@ body.mq-on .modal{z-index:62}
 .mqmic.on{background:linear-gradient(#e0606e,#b8384a);box-shadow:0 8px 18px -6px rgba(160,40,60,.6),0 0 0 calc(var(--lv)*14px + 4px) rgba(224,96,110,.22);animation:dengar 1.4s ease-in-out infinite}
 @keyframes dengar{50%{box-shadow:0 8px 18px -6px rgba(160,40,60,.6),0 0 0 12px rgba(224,96,110,.14)}}
 @media (prefers-reduced-motion:reduce){.mqmic.on,.mdot{animation:none}}
+/* putar peta */
+.putar{position:absolute;right:12px;bottom:calc(max(12px,env(safe-area-inset-bottom)) + 104px);z-index:3;width:48px;height:48px;border-radius:16px;border:0;cursor:pointer;display:grid;place-items:center;color:#7a2236;background:rgba(255,250,242,.96);box-shadow:var(--shadow)}
+.putar svg{width:26px;height:26px;transform:rotate(var(--r,0deg));transition:transform .35s cubic-bezier(.2,.9,.3,1.2)}
+.putar:active{transform:scale(.93)}
