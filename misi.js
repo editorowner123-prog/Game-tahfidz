@@ -268,9 +268,9 @@ function misiMulai() {
   misiHari(); misiBadge(); misiSinkron();
   setTimeout(() => { if (!misiHari().tilawah && !$('modal').classList.contains('on') && CUR === 'hub') toast('Misi wajib hari ini: tilawah 1 juz. Ketuk ★ untuk mulai.') }, 5000);
 }
-$('poinP').onclick = bukaMisi;
-$('mqX').onclick = tutupTilawah;
-$('mqMic').onclick = () => MQ.aktif ? jedaDengar() : mulaiDengar();
-$('mqMode').onclick = () => { const on = MQ.aktif; if (on) jedaDengar(false); MQ.mode = MQ.mode === 'sr' ? 'vad' : 'sr'; $('mqMode').textContent = MQ.mode === 'sr' ? 'Ikuti suara' : 'Kenali bacaan'; if (!SR) MQ.mode = 'vad'; if (on) mulaiDengar(); else stMq(MQ.mode === 'sr' ? 'Mode kenali bacaan: kata menebal bila bacaan cocok.' : 'Mode ikuti suara: kata menebal selama kamu membaca dengan suara.') };
-if (!SR) { MQ.mode = 'vad'; $('mqMode').hidden = true }
+if ($('poinP')) $('poinP').onclick = bukaMisi;
+if ($('mqX')) $('mqX').onclick = tutupTilawah;
+if ($('mqMic')) $('mqMic').onclick = () => MQ.aktif ? jedaDengar() : mulaiDengar();
+if ($('mqMode')) $('mqMode').onclick = () => { const on = MQ.aktif; if (on) jedaDengar(false); MQ.mode = MQ.mode === 'sr' ? 'vad' : 'sr'; $('mqMode').textContent = MQ.mode === 'sr' ? 'Ikuti suara' : 'Kenali bacaan'; if (!SR) MQ.mode = 'vad'; if (on) mulaiDengar(); else stMq(MQ.mode === 'sr' ? 'Mode kenali bacaan: kata menebal bila bacaan cocok.' : 'Mode ikuti suara: kata menebal selama kamu membaca dengan suara.') };
+if (!SR) { MQ.mode = 'vad'; if ($('mqMode')) $('mqMode').hidden = true }
 window.addEventListener('resize', () => { if (!$('mushaf').hidden && MQ.d) ukurHuruf() });
