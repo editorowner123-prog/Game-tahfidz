@@ -97,7 +97,7 @@
       <button class="pill" id="tierP"><span class="ic"><svg><use href="#i-masjid"/></svg><b class="lvb" id="lvB">1</b></span><span><span id="tierT">Desa</span><small id="tierS"></small></span></button>
       <button class="pill alamp" id="alamP" aria-label="Cuaca dan waktu sholat"><span class="aic" id="alamIc"></span><span><span id="alamT">--.--</span><small id="alamS">Sholat</small></span></button>
     </div>
-    <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><div class="pill" id="pasP"><svg><use href="#i-troop"/></svg><span id="pas">0</span></div></div>
+    <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><div class="pill" id="pasP"><svg><use href="#i-troop"/></svg><span id="pas">0</span></div><button class="pill poinp" id="poinP" aria-label="Misi harian dan poin"><svg><use href="#i-star"/></svg><span id="poin">0</span><i class="mdot" id="misiDot" hidden></i></button></div>
   </div>
   <button class="btn b-gold lvup" id="lvUp" hidden></button>
   <nav class="dock" id="dock">
@@ -186,6 +186,12 @@
     <p class="knote">Game istirahat sebentar. Ayo ambil wudhu dan sholat dulu. Progresmu sudah tersimpan.</p>
   </div>
 </section>
+<section class="mushaf" id="mushaf" aria-label="Tilawah" hidden>
+  <header class="mqbar"><button class="mqx" id="mqX" aria-label="Tutup">&#x2715;</button><div class="mqt"><b id="mqT">Tilawah</b><small id="mqS"></small></div><button class="mqmode" id="mqMode">Ikuti suara</button><div class="mqprog"><i id="mqBar"></i></div></header>
+  <div class="mqpages" id="mqPages"></div>
+  <footer class="mqctl"><p class="mqst" id="mqSt" role="status"></p><button class="mqmic" id="mqMic" aria-label="Mulai membaca"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></footer>
+</section>
+<input type="file" id="fotoIn" accept="image/*" capture="user" hidden>
 <div class="toast" id="toast" role="status"></div>
 <div class="count" id="count" hidden></div>
 <div class="load" id="load">Benteng Huffazh<small id="loadS">Menyiapkan wilayah…</small></div>
@@ -200,6 +206,7 @@
 <script src="sholat.js"></script>
 <script src="cuaca.js"></script>
 <script src="desa.js"></script>
+<script src="misi.js"></script>
 <script>boot()</script>
 </body>
 </html>
