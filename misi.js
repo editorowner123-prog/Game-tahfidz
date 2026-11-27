@@ -1,10 +1,11 @@
 /* ===== misi.js — misi harian =====
    1. Tilawah 1 juz (wajib, +150): mushaf Madinah 15 baris, dibaca dengan suara; kata yang terdengar menebal.
-      Urut juz 1 → 30 lalu khatam dan mulai lagi. Boleh berhenti dan dilanjutkan. Poin sekali sehari.
+      Urut juz 1 → 30 lalu khatam dan mulai lagi dari juz 1. Boleh berhenti dan dilanjutkan.
+      +150 untuk SETIAP juz yang selesai (boleh lebih dari 1 juz sehari); hari berikutnya lanjut dari juz terakhir.
    2. Swafoto kebaikan (+20 per kegiatan, maks. 3 sehari): membantu orang tua atau membantu ustadz.
    3. Catatan kajian (+50, sekali sehari): minimal 3 faidah dan 1 dalil; syarat tidak ditampilkan di awal,
       hanya diberi tahu bila kurang. */
-const MISI_POIN = { tilawah: 150, swafoto: 20, kajian: 50 }, MISI_BATAS = { tilawah: 1, swafoto: 3, kajian: 1 };
+const MISI_POIN = { tilawah: 150, swafoto: 20, kajian: 50 }, MISI_BATAS = { tilawah: 99, swafoto: 3, kajian: 1 };
 const ANGKA_AR = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 function tglHariIni() { const tz = typeof zonaJam === 'function' ? zonaJam() : 7; return new Date((typeof kini === 'function' ? kini() : Date.now()) + tz * 3600e3).toISOString().slice(0, 10) }
 function misiHari() { const t = tglHariIni(); if (!S.misi || S.misi.tgl !== t) S.misi = { tgl: t, tilawah: 0, swafoto: 0, kajian: 0 }; return S.misi }
@@ -15,7 +16,7 @@ async function klaimMisi(jenis, data, foto) {
   const m = misiHari(); let poin;
   if (misiOnline()) { const r = await netRpc('game_misi_kirim', { p_tipe: NET.P.tipe, p_id: NET.P.id, p_jenis: jenis, p_data: data, p_foto: foto || null }); poin = (r && r.poin) || 0 }
   else poin = m[jenis] < MISI_BATAS[jenis] ? MISI_POIN[jenis] : 0;
-  if (poin > 0) { m[jenis]++; S.poin = (S.poin || 0) + poin } else m[jenis] = Math.max(m[jenis], MISI_BATAS[jenis]);
+  if (poin > 0) { m[jenis]++; S.poin = (S.poin || 0) + poin } else if (jenis !== 'tilawah') m[jenis] = Math.max(m[jenis], MISI_BATAS[jenis]);
   save(); if (typeof hud === 'function') hud(); misiBadge();
   return poin;
 }
@@ -36,7 +37,7 @@ function bukaMisi() {
   const tgl = new Date(m.tgl + 'T00:00:00').toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
   const kartu = (k, judul, ket, tombol, selesai, wajib) => `<div class="mkartu${selesai ? ' done' : ''}"><span class="mic ${k}">${IK_MISI[k]}</span><div class="mtx"><b>${judul}${wajib ? ' <span class="tag wajib">Wajib</span>' : ''}</b><small>${ket}</small></div><span class="mpt">${selesai ? '✓' : '+' + MISI_POIN[k]}</span></div>${tombol}`;
   sheet(head('Misi harian', tgl) + `<div class="sb misi">
-    ${kartu('tilawah', 'Tilawah 1 juz', `Juz ${T.j} · ${pct}% dibaca${T.kh ? ` · khatam ${T.kh}×` : ''}${m.tilawah ? ' · poin hari ini sudah didapat' : ''}`, `<button class="btn ${m.tilawah ? 'b-soft' : 'b-maroon'} wide" id="msTil">${T.w ? 'Lanjutkan tilawah' : 'Mulai tilawah'} Juz ${T.j}</button>`, m.tilawah >= 1, true)}
+    ${kartu('tilawah', 'Tilawah 1 juz', `Juz ${T.j} · ${pct}% dibaca${T.kh ? ` · khatam ${T.kh}×` : ''}${m.tilawah ? ` · hari ini ${m.tilawah} juz (+${m.tilawah * MISI_POIN.tilawah})` : ''}. Tiap juz yang selesai +${MISI_POIN.tilawah}.`, `<button class="btn ${m.tilawah ? 'b-soft' : 'b-maroon'} wide" id="msTil">${T.w ? 'Lanjutkan tilawah' : 'Mulai tilawah'} Juz ${T.j}</button>`, m.tilawah >= 1, true)}
     ${kartu('swafoto', 'Swafoto kebaikan', `Membantu orang tua atau ustadz · ${m.swafoto}/${MISI_BATAS.swafoto} hari ini`, m.swafoto < MISI_BATAS.swafoto ? '<button class="btn b-soft wide" id="msFoto">Ambil swafoto</button>' : '', m.swafoto >= MISI_BATAS.swafoto)}
     ${kartu('kajian', 'Catatan kajian', m.kajian ? 'Sudah tercatat hari ini' : 'Dengarkan kajian, lalu catat faidah dan dalilnya', m.kajian ? '' : '<button class="btn b-soft wide" id="msKaj">Tulis catatan kajian</button>', m.kajian >= 1)}
     <p class="note" style="margin-top:12px">Total poin <b>${(S.poin || 0).toLocaleString('id-ID')}</b>. Poin menambah level dan peringkat.</p></div>`);
@@ -175,7 +176,7 @@ async function selesaiJuz() {
   let poin = 0, gagal = false; try { poin = await klaimMisi('tilawah', { juz: j, khatam: T.kh }) } catch (e) { gagal = true }
   stMq('Alhamdulillah, juz ini selesai.');
   modal(`<header>${j === 30 ? 'Khatam!' : `Juz ${j} selesai`}<small>${j === 30 ? `Khatam ke-${T.kh}. Masya Allah, tabarakallah.` : 'Alhamdulillah'}</small></header>
-    <p>${poin ? `<b>+${poin} poin</b> misi tilawah hari ini.` : gagal ? 'Bacaan tersimpan, tapi poin belum terkirim karena koneksi. Coba buka misi lagi nanti.' : 'Poin tilawah hari ini sudah didapat. Bacaanmu tetap tercatat.'}</p>
+    <p>${poin ? `<b>+${poin} poin</b>. Hari ini sudah ${misiHari().tilawah} juz.` : gagal ? 'Bacaan tersimpan, tapi poin belum terkirim karena koneksi.' : 'Juz ini sudah pernah dapat poin di putaran khatam ini. Bacaanmu tetap tercatat.'}</p>
     <p style="font-size:14px;color:var(--muted)">Berikutnya: Juz ${T.j}.</p>`, [{ t: 'Kembali ke desa', f: tutupTilawah }, { t: `Lanjut Juz ${T.j}`, c: 'b-soft', f: () => { MQ.d = null; bukaTilawah() } }]);
 }
 function tutupTilawah() {
