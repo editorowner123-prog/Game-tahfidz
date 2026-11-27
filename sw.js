@@ -4,12 +4,12 @@
    Data juz disimpan permanen di HP (isinya tidak pernah berubah) supaya hemat kuota.
    Panggilan ke Supabase (login, simpan progres) tidak pernah disimpan.
    Naikkan VERSI hanya kalau file ini sendiri atau daftar INTI berubah. */
-const VERSI = 'bh-inti-4';
+const VERSI = 'bh-inti-5';
 const DATA = 'bh-data-1';
 const LUAR = 'bh-luar-1';
 const INTI = [
   './', 'index.html', 'style.css', 'config.js', 'core.js', 'hub.js', 'rihlah.js', 'duel.js', 'garda.js',
-  'net.js', 'pwa.js', 'sholat.js', 'cuaca.js', 'desa.js', 'manifest.json', 'data/surah.json',
+  'net.js', 'pwa.js', 'sholat.js', 'cuaca.js', 'desa.js', 'misi.js', 'manifest.json', 'data/surah.json',
   'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'favicon-32.png'
 ];
 const LUAR_OK = ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
@@ -59,7 +59,7 @@ self.addEventListener('fetch', e => {
 
   if (url.origin === location.origin) {
     if (req.mode === 'navigate') return e.respondWith(internetDulu(req, 'index.html'));
-    if (/\/data\/juz\d+\.json$/.test(url.pathname)) return e.respondWith(cacheDulu(DATA, req));
+    if (/\/data\/[\w-]+\.json$/.test(url.pathname) && !/surah\.json$/.test(url.pathname) || /\.ttf$/.test(url.pathname)) return e.respondWith(cacheDulu(DATA, req));
     return e.respondWith(internetDulu(req));
   }
   // Pustaka dan font dari CDN memakai alamat bernomor versi, jadi aman disimpan permanen.
