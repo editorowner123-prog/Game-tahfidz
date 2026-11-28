@@ -16,7 +16,7 @@ async function klaimMisi(jenis, data, foto) {
   const m = misiHari(); let poin;
   if (misiOnline()) { const r = await netRpc('game_misi_kirim', { p_tipe: NET.P.tipe, p_id: NET.P.id, p_jenis: jenis, p_data: data, p_foto: foto || null }); poin = (r && r.poin) || 0 }
   else poin = m[jenis] < MISI_BATAS[jenis] ? MISI_POIN[jenis] : 0;
-  if (poin > 0) { m[jenis]++; S.poin = (S.poin || 0) + poin } else if (jenis !== 'tilawah') m[jenis] = Math.max(m[jenis], MISI_BATAS[jenis]);
+  if (poin > 0) { m[jenis]++; S.poin = (S.poin || 0) + poin; if (window.sfx) sfx('koin') } else if (jenis !== 'tilawah') m[jenis] = Math.max(m[jenis], MISI_BATAS[jenis]);
   save(); if (typeof hud === 'function') hud(); misiBadge();
   return poin;
 }
@@ -42,8 +42,25 @@ function bukaMisi() {
     ${kartu('kajian', 'Catatan kajian', m.kajian ? 'Sudah tercatat hari ini' : 'Dengarkan kajian, lalu catat faidah dan dalilnya', m.kajian ? '' : '<button class="btn b-soft wide" id="msKaj">Tulis catatan kajian</button>', m.kajian >= 1)}
     <p class="note" style="margin-top:12px">Total poin <b>${(S.poin || 0).toLocaleString('id-ID')}</b>. Poin menambah level dan peringkat.</p></div>`);
   if ($('msTil')) $('msTil').onclick = () => { closeSheet(); bukaTilawah() };
-  if ($('msFoto')) $('msFoto').onclick = ambilSwafoto;
+  if ($('msFoto')) $('msFoto').onclick = () => { if (window.bukaKolam) bukaKolam(); else ambilSwafoto() };
   if ($('msKaj')) $('msKaj').onclick = tulisKajian;
+}
+
+/* kartu tilawah di lembar masjid */
+function kartuTilawah() {
+  const m = misiHari(), T = tilawahState();
+  return `<div class="misi" style="margin:0 0 12px"><div class="mkartu${m.tilawah ? ' done' : ''}"><span class="mic tilawah">${IK_MISI.tilawah}</span><div class="mtx"><b>Tilawah 1 juz <span class="tag wajib">Wajib</span></b><small>Juz ${T.j}${T.kh ? ` · khatam ${T.kh}×` : ''}${m.tilawah ? ` · hari ini ${m.tilawah} juz (+${m.tilawah * MISI_POIN.tilawah})` : ''} · tiap juz +${MISI_POIN.tilawah}</small></div><span class="mpt">${m.tilawah ? '✓' : '+' + MISI_POIN.tilawah}</span></div>
+    <button class="btn ${m.tilawah ? 'b-soft' : 'b-maroon'} wide" id="mTil">${T.w ? 'Lanjutkan' : 'Mulai'} tilawah Juz ${T.j}</button></div>`;
+}
+/* kolam desa: misi membantu & bekerja */
+function bukaKolam() {
+  sel = null; const m = misiHari(), sisa = MISI_BATAS.swafoto - m.swafoto;
+  sheet(head('Kolam desa', 'Tempat warga bekerja dan saling membantu') + `<div class="sb misi">
+    <div class="mkartu${sisa <= 0 ? ' done' : ''}"><span class="mic swafoto">${IK_MISI.swafoto}</span><div class="mtx"><b>Bantu &amp; swafoto</b><small>Bantu orang tua di rumah atau bekerja untuk ustadz, lalu berswafoto saat melakukannya · ${m.swafoto}/${MISI_BATAS.swafoto} hari ini</small></div><span class="mpt">${sisa <= 0 ? '✓' : '+' + MISI_POIN.swafoto}</span></div>
+    ${sisa > 0 ? '<button class="btn b-teal wide" id="klFoto">Ambil swafoto</button>' : '<p class="note">Sudah 3 kali hari ini. Jazakallahu khairan, lanjut lagi besok.</p>'}
+    <p class="note" style="margin-top:10px">Contoh: mencuci piring, menyapu, membantu memasak, merapikan kamar, atau membersihkan kelas dan masjid untuk ustadz.</p></div>`);
+  const kl = window.blokDeko && blokDeko('kolam'); if (kl) focusAt(...P(...kl.c, 10), .32);
+  if ($('klFoto')) $('klFoto').onclick = ambilSwafoto;
 }
 
 /* ---------- 1. tilawah ---------- */
@@ -266,7 +283,7 @@ function tulisKajian() {
 /* ---------- mulai ---------- */
 function misiMulai() {
   misiHari(); misiBadge(); misiSinkron();
-  setTimeout(() => { if (!misiHari().tilawah && !$('modal').classList.contains('on') && CUR === 'hub') toast('Misi wajib hari ini: tilawah 1 juz. Ketuk ★ untuk mulai.') }, 5000);
+  setTimeout(() => { if (!misiHari().tilawah && !$('modal').classList.contains('on') && CUR === 'hub') toast('Misi wajib hari ini: tilawah 1 juz. Ketuk masjid untuk mulai.') }, 5000);
 }
 if ($('poinP')) $('poinP').onclick = bukaMisi;
 if ($('mqX')) $('mqX').onclick = tutupTilawah;
