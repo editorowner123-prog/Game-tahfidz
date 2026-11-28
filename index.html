@@ -108,9 +108,10 @@ setTimeout(tampil,15000);window.__bhErr=E})();
       <button class="pill" id="tierP"><span class="ic"><svg><use href="#i-masjid"/></svg><b class="lvb" id="lvB">1</b></span><span><span id="tierT">Desa</span><small id="tierS"></small></span></button>
       <button class="pill alamp" id="alamP" aria-label="Cuaca dan waktu sholat"><span class="aic" id="alamIc"></span><span><span id="alamT">--.--</span><small id="alamS">Sholat</small></span></button>
     </div>
-    <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><div class="pill" id="pasP"><svg><use href="#i-troop"/></svg><span id="pas">0</span></div><button class="pill poinp" id="poinP" aria-label="Misi harian dan poin"><svg><use href="#i-star"/></svg><span id="poin">0</span><i class="mdot" id="misiDot" hidden></i></button></div>
+    <div class="res"><div class="pill" id="goldP"><svg><use href="#i-coin"/></svg><span id="gold">0</span></div><button class="pill pasp" id="pasP" aria-label="Barak dan kekuatan pasukan"><svg><use href="#i-troop"/></svg><span><span id="pas">0</span><small id="kuatS">⚔ 0</small></span></button><button class="pill poinp" id="poinP" aria-label="Misi harian dan poin"><svg><use href="#i-star"/></svg><span id="poin">0</span><i class="mdot" id="misiDot" hidden></i></button></div>
   </div>
   <button class="btn b-gold lvup" id="lvUp" hidden></button>
+  <button class="putar suarab" id="suaraB" aria-label="Matikan suara"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path class="gel" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path class="x" d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
   <button class="putar" id="putarB" aria-label="Putar peta 90 derajat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.35-5.65" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M20.5 3.5v5h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.2l2.2 4.6H9.8z" fill="currentColor"/></svg></button>
   <nav class="dock" id="dock">
     <button class="dk" id="dR"><span class="i" style="background:linear-gradient(#f0a070,#d06a5c)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="#fff"/></svg></span>Rihlah<small>buka wilayah</small></button>
@@ -162,6 +163,20 @@ setTimeout(tampil,15000);window.__bhErr=E})();
     <button class="btn b-gold gspec" id="gSpec" hidden>Nur Agung</button>
     <button class="btn b-plum gload" id="gLoad">Isi Nur</button>
     <button class="fire" id="gFire" aria-label="Tembak Nur"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 8h12l-2 4h-8z" fill="#9a6a28"/><rect x="15" y="12" width="18" height="24" rx="5" fill="#fffbe6" stroke="#9a6a28" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#ffb020"/><path d="M13 38h22" stroke="#9a6a28" stroke-width="4" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<section id="serang" class="screen" hidden>
+  <canvas id="scv" aria-label="Medan serangan"></canvas>
+  <div class="sgtop">
+    <button class="back" id="sgBack" aria-label="Kembali">←</button>
+    <div class="sgt"><b id="sgNama">Desa</b><small id="sgSub"></small></div>
+    <div class="sgwkt" id="sgWaktu">1:30</div>
+  </div>
+  <div class="sgskor"><span class="sgbin" id="sgBin"></span><b id="sgPct">0%</b><small>hancur</small></div>
+  <div class="sgbawah">
+    <p class="sgtip" id="sgTip">Ketuk tanah di luar zona merah untuk menurunkan pasukan. Tahan untuk menurunkan beruntun. Serangan dimulai saat pasukan pertama turun.</p>
+    <div class="sgbar"><div class="sgpas"><svg><use href="#i-troop"/></svg><span><b id="sgSisa">0</b><small>pasukan siap</small></span></div><button class="btn b-maroon" id="sgAkhir">Batal</button></div>
   </div>
 </section>
 
@@ -219,6 +234,9 @@ setTimeout(tampil,15000);window.__bhErr=E})();
 <script src="cuaca.js"></script>
 <script src="desa.js"></script>
 <script src="misi.js"></script>
+<script src="pasukan.js"></script>
+<script src="serang.js"></script>
+<script src="suara.js"></script>
 <script>boot()</script>
 </body>
 </html>
