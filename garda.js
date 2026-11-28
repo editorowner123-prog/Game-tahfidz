@@ -139,7 +139,7 @@ if(location.hash==='#uji')window.GH={PL,get enemies(){return enemies},spawn:k=>s
 let INTRO_DONE=false;
 async function startGame(){await loadTier(S.view);layoutHub();home();hud();$('gate').hidden=true;$('load').hidden=true;go('hub');if(!frameHub.on){frameHub.on=1;requestAnimationFrame(frameHub)}
   window.lanjutIntro=()=>{if(!(S.tut&1)){S.tut|=1;save();const santri=NET.P&&NET.P.tipe==='santri';setTimeout(()=>modal(`<header>${esc(window.judulDesa?judulDesa(S.tier):'Benteng Huffazh')}<small>${esc(NET.P?NET.P.nama:'')}</small></header><p style="text-align:left">Desamu berdiri di <b>Juz 30</b>. Ketuk tanda <b>+</b> untuk mendirikan bangunan lewat murajaah; tiap bangunan menjaga seperempat juz.</p><p style="text-align:left"><b>Rihlah</b> membuka wilayah juz berikutnya, <b>Duel</b> merebutnya, dan <b>Garda</b> menambah pasukan sekaligus memperkuat bangunan.${santri?` Wilayah yang bisa dibuka mengikuti hafalan yang sudah disetorkan (${MAXJ} juz).`:' Tiap 5 juz, wilayahmu naik tingkat.'}</p>`,[{t:'Bismillah, mulai',f:()=>setTimeout(()=>{if(window.sholatTawarIzin)sholatTawarIzin()},300)}]),350)}else setTimeout(()=>{if(window.sholatTawarIzin&&!$('modal').classList.contains('on'))sholatTawarIzin()},700)};
-  if(window.desaMulai)desaMulai();else lanjutIntro();if(window.misiMulai)misiMulai()}
+  if(window.desaMulai)desaMulai();else lanjutIntro();if(window.misiMulai)misiMulai();if(window.seranganMasuk)seranganMasuk()}
 function boot(){resizeHub();addEventListener('resize',resizeHub);netInit();
   fetch('data/surah.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(async a=>{a.forEach(s=>SUR[s.n]=s);
     if(NET.demo)return pilihPemain({tipe:'demo',id:'demo',nama:'Mode coba'});
