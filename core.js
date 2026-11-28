@@ -97,7 +97,7 @@ function renderQ(q,el,o){q.miss=0;q.pos=0;q.done=0;let h=`<p class="cap">${esc(q
   if(q.type==='susun')h+=`<div class="slot ar"></div><div class="chips">${q.chips.map(w=>`<button type="button" class="chip" data-w="${esc(w)}">${esc(w)}</button>`).join('')}</div>`;
   else h+=`<div class="qcard"><p class="ar">${q.html||esc(q.ar)}${q.type!=='tebak'?' '+NUM(q.num):''}</p></div>`+q.opts.map((x,k)=>q.lat?`<button type="button" class="opt lat" data-k="${k}"><b>${esc(x.h)}</b><span class="${x.ar?'ara':'sub'}">${esc(x.ar||x.sub||'')}</span></button>`:`<button type="button" class="opt" data-k="${k}">${esc(x.h)}</button>`).join('');
   el.innerHTML=h+'<div class="fbw"></div>';
-  const fin=ok=>{q.done=1;q.res=ok?1:0;const r=q.rev;const extra=o.onAnswer?o.onAnswer(ok)||'':'';
+  const fin=ok=>{q.done=1;q.res=ok?1:0;if(window.sfx)sfx(ok?'benar':'salah');const r=q.rev;const extra=o.onAnswer?o.onAnswer(ok)||'':'';
     const msg=ok?'Benar!':(q.type==='tebak'?'Belum tepat.':'Belum tepat. Begini yang benar:');const w=el.querySelector('.fbw');
     w.innerHTML=`<div class="fb ${ok?'ok':'bad'}"><h4>${esc(msg)}${extra?` <small>${esc(extra)}</small>`:''}</h4><p class="ar">${esc(r[2])} ${NUM(r[1])}</p><p class="tr">${esc(r[3])} <i>(QS ${esc(ref(r))})</i></p></div><button type="button" class="btn b-green wide nx">${esc(o.nextLabel||'Lanjut')}</button>`;
     w.querySelector('.nx').onclick=()=>{if(o.onNext)o.onNext(ok)};w.scrollIntoView({behavior:'smooth',block:'nearest'})};
@@ -109,5 +109,5 @@ function renderQ(q,el,o){q.miss=0;q.pos=0;q.done=0;let h=`<p class="cap">${esc(q
 const dotsOf=(qs,i)=>qs.map((q,k)=>`<i class="${q.res===1?'ok':q.res===0?'bad':k===i?'now':''}"></i>`).join('');
 
 /* ---------- layar ---------- */
-const SCREENS=['hub','rihlah','duel','garda'];let CUR='hub';
+const SCREENS=['hub','rihlah','duel','garda','serang'];let CUR='hub';
 function go(name){CUR=name;SCREENS.forEach(s=>$(s).hidden=s!==name);closeQ();document.querySelectorAll('.sheet').forEach(s=>s.classList.remove('on'))}
