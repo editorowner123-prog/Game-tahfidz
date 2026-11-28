@@ -78,9 +78,10 @@ function bukaTetangga(n) {
   sheet(head(`${TIERS[t].nm} ${n.desa || 'tanpa nama'}`, `milik ${n.nama}`) + `<div class="sb">
     <div class="grid2"><div class="stat"><b>Lv ${n.lv}</b>level pemain</div><div class="stat"><b>${TIERS[t].nm}</b>tingkat</div><div class="stat"><b>${n.wilayah}</b>wilayah dikuasai</div><div class="stat"><b>${n.bangunan}</b>bangunan berdiri</div></div>
     <p class="p">${n.atas ? 'Salah satu desa terkuat saat ini. ' : ''}${n.lv > saya ? 'Desa ini lebih maju darimu. Rajin murajaah untuk menyusul!' : n.lv < saya ? 'Desamu lebih maju. Pertahankan dengan murajaah setiap hari.' : 'Kalian setara. Siapa yang lebih rajin murajaah?'}</p>
-    <button class="btn b-gold wide" id="tRank">Papan peringkat</button></div>`);
+    <div class="row"><button class="btn b-maroon" id="tSerang" ${n.lindung ? 'disabled' : ''}>Serang desa ini</button><button class="btn b-gold" id="tRank">Papan peringkat</button></div>
+    <p class="note">${n.lindung ? 'Desa ini sedang dilindungi 24 jam setelah kalah diserang.' : `Jatah serangan hari ini ${window.SERANG ? SERANG.sisa : 2}/2 · pasukanmu ${S.pas || 0}${window.kuatTotal ? ' · ⚔ ' + angkaPendek(kuatTotal()) : ''}`}</p></div>`);
   focusAt(...P(n.i + 2, n.j + 2, 40), .32);
-  $('tRank').onclick = openPeringkat;
+  $('tRank').onclick = openPeringkat; if ($('tSerang')) $('tSerang').onclick = () => { if (window.mulaiIntai) mulaiIntai(n) };
 }
 
 /* desa kecil pemain lain: makin tinggi tingkatnya, makin besar dan megah */
