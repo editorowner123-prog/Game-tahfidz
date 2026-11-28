@@ -163,7 +163,7 @@ function alamPartikel(ctx, w, h, s, dt, a, F, opsi = {}) {
   }
   if (a.petir) {
     F.next -= dt;
-    if (F.next <= 0) { F.flash = 1; F.dua = .14; F.bolt = buatKilat(w, h, s); F.boltT = .28; F.next = 5 + acak() * 10 }
+    if (F.next <= 0) { F.flash = 1; F.dua = .14; F.bolt = buatKilat(w, h, s); F.boltT = .28; F.next = 5 + acak() * 10; if (window.suaraPetir) suaraPetir() }
   }
   if (F.dua > 0) { F.dua -= dt; if (F.dua <= 0) F.flash = Math.max(F.flash, .75) }
   if (F.bolt && F.boltT > 0) {
@@ -196,7 +196,7 @@ function alamHub(ctx, w, h, s, dt, keDunia, lampu) {
 /* ---- Rihlah, Duel, Garda: lapisan di atas layar permainan ---- */
 const LAPIS = [];
 function alamPasangLapis() {
-  [['rMapV', 'rihlah', null], ['stage', 'rihlah', 'bsvg'], ['arena', 'duel', 'dcv'], ['garda', 'garda', 'gl']].forEach(([id, mode, setelah]) => {
+  [['rMapV', 'rihlah', null], ['stage', 'rihlah', 'bsvg'], ['arena', 'duel', 'dcv'], ['garda', 'garda', 'gl'], ['serang', 'serang', 'scv']].forEach(([id, mode, setelah]) => {
     const host = $(id); if (!host) return;
     const el = document.createElement('div'); el.className = 'alamfx'; el.setAttribute('aria-hidden', 'true');
     el.innerHTML = (mode === 'garda' ? '' : '<i></i>') + '<canvas></canvas>';
