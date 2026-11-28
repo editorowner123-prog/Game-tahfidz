@@ -4,12 +4,12 @@
    Data juz disimpan permanen di HP (isinya tidak pernah berubah) supaya hemat kuota.
    Panggilan ke Supabase (login, simpan progres) tidak pernah disimpan.
    Naikkan VERSI hanya kalau file ini sendiri atau daftar INTI berubah. */
-const VERSI = 'bh-inti-6';
+const VERSI = 'bh-inti-7';
 const DATA = 'bh-data-1';
 const LUAR = 'bh-luar-1';
 const INTI = [
   './', 'index.html', 'style.css', 'config.js', 'core.js', 'hub.js', 'rihlah.js', 'duel.js', 'garda.js',
-  'net.js', 'pwa.js', 'sholat.js', 'cuaca.js', 'desa.js', 'misi.js', 'manifest.json', 'data/surah.json',
+  'net.js', 'pwa.js', 'sholat.js', 'cuaca.js', 'desa.js', 'misi.js', 'pasukan.js', 'serang.js', 'suara.js', 'manifest.json', 'data/surah.json',
   'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'favicon-32.png'
 ];
 const LUAR_OK = ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
