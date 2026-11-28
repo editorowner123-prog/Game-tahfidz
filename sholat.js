@@ -100,7 +100,8 @@ function sholatKeluarMode() {
   $('modal').classList.remove('on');
   if (typeof closeQ === 'function') closeQ();
   document.querySelectorAll('.sheet').forEach(s => s.classList.remove('on'));
-  if (CUR === 'duel') $('dBack').onclick();
+  if (CUR === 'serang' && window.serangKeluar) serangKeluar();
+  else if (CUR === 'duel') $('dBack').onclick();
   else if (CUR === 'garda') $('gBack').onclick();
   else if (CUR === 'rihlah') { try { B = null } catch (e) {} hubReturn(null) }
   if (typeof NET !== 'undefined' && NET.P && !NET.demo) netSimpanSekarang();
