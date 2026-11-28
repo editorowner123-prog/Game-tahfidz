@@ -5,7 +5,7 @@ const cam={x:0,y:0,z:.72};let camT=null;
 function resizeHub(){dpr=Math.min(2,devicePixelRatio||1);const ss=dpr>=2?2:1.5;if(ss!==SS){SS=ss;SPR.clear()}W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr}
 const P=(i,j,z=0)=>[(i-j)*32,(i+j)*16-z];
 const BB=3,BS=7,MM=BB*2+BS*3-1;
-const TBLK=[[2,2],[2,1],[2,0],[1,0],[0,0]],DBLK=[[0,1,'kolam'],[0,2,'hutan'],[1,2,'kebun']];
+const TBLK=[[2,2],[2,1],[2,0],[1,0],[0,0]],DBLK=[[0,1,'kolam'],[0,2,'lapangan'],[1,2,'kebun']];
 /* putar peta: tata letak diputar 90° per langkah (sudut pandang berubah), gambar bangunan tetap menghadap ke depan */
 let ROT=(()=>{try{return(+localStorage.getItem('bh-putar')||0)%4}catch(e){return 0}})();
 function rotTitik(i,j,r=ROT){for(let k=0;k<r;k++)[i,j]=[MM-1-j,i];return[i,j]}
@@ -114,13 +114,15 @@ function bCamp(g){const [sx,sy]=P(1.1,1.2);shadowE(g,sx,sy,66,30,.2);
   const tent=(i,j,r,h,col)=>{const [cx,cy]=P(i,j,0);cone(g,cx,cy,r,h,col);g.fillStyle=C('#4a5a7a');g.beginPath();g.moveTo(cx-6,cy+r*.5-1);g.quadraticCurveTo(cx,cy+r*.5-20,cx+6,cy+r*.5-1);g.closePath();g.fill()};
   tent(.7,.65,24,34,'#8ab0e6');box(g,1.35,.45,.3,.3,0,10,'#d8ae78');box(g,1.42,.52,.18,.18,10,7,'#e6c28a');tent(1.2,1.25,18,26,'#a6c2ee');
   const [fx,fy]=P(.45,1.45,0);line(g,[[fx,fy],[fx,fy-46]],'#8a6a4a',2.2);g.fillStyle='#6a98e0';g.beginPath();g.moveTo(fx,fy-46);g.quadraticCurveTo(fx+12,fy-46,fx+20,fy-41);g.quadraticCurveTo(fx+12,fy-37,fx,fy-35);g.closePath();g.fill()}
-function bMasjid(g,lv){const [sx,sy]=P(2.2,2.4);shadowE(g,sx+10,sy,150,70,.3);box(g,.06,.06,3.88,3.88,0,5,'#f4ecdc');
-  const H2=lv>2?112:96,mn=(i,j)=>{const [mx,my]=P(i,j,5);cyl(g,mx,my,8,H2,'#fffaf2');cyl(g,mx,my-H2*.7,11,4,'#f6d06a');cyl(g,mx,my-H2,6.5,12,'#fffaf2');dome(g,mx,my-H2-12,7.5)};
+function bMasjid(g,lv){const [sx,sy]=P(2.2,2.4),L4=lv>3;shadowE(g,sx+10,sy,150+(L4?14:0),70+(L4?6:0),.3);box(g,.06,.06,3.88,3.88,0,5,L4?'#f8f1e2':'#f4ecdc');if(L4)line(g,[P(.06,3.94,5),P(3.94,3.94,5),P(3.94,.06,5)],C(EMAS),2);
+  const H2=L4?124:lv>2?112:96,mn=(i,j)=>{const [mx,my]=P(i,j,5);cyl(g,mx,my,8,H2,'#fffaf2');cyl(g,mx,my-H2*.7,11,4,'#f6d06a');if(L4)cyl(g,mx,my-H2*.38,9.5,3,'#f6d06a');cyl(g,mx,my-H2,6.5,12,'#fffaf2');dome(g,mx,my-H2-12,7.5)};
+  const kubah=(i,j)=>{const [x,y]=P(i,j,49);cyl(g,x,y,7,6,'#fffaf2');dome(g,x,y-6,8.5)};
   mn(.45,.45);box(g,.75,.75,2.5,2.5,5,40,'#fffbf4');
   for(let k=0;k<4;k++)arch(g,'L',.75,.75,2.5,2.5,.06+k*.24,.2+k*.24,13,32,'#c06070');
   arch(g,'R',.75,.75,2.5,2.5,.06,.2,13,32,'#c06070');arch(g,'R',.75,.75,2.5,2.5,.38,.62,5,36,'#9a3a4c');arch(g,'R',.75,.75,2.5,2.5,.8,.94,13,32,'#c06070');
-  box(g,.71,.71,2.58,2.58,45,4,'#f6d06a');const [dx,dy]=P(2,2,49);cyl(g,dx,dy,30,10,'#fffaf2');dome(g,dx,dy-10,lv>2?44:38);
-  if(lv>1){mn(3.55,.45);mn(.45,3.55)}if(lv>2)mn(3.55,3.55)}
+  box(g,.71,.71,2.58,2.58,45,4,'#f6d06a');if(L4){kubah(1.02,1.02);kubah(2.98,1.02);kubah(1.02,2.98)}const [dx,dy]=P(2,2,49);cyl(g,dx,dy,30,10,'#fffaf2');if(L4)cyl(g,dx,dy-6,31,3,'#f6d06a');dome(g,dx,dy-10,L4?48:lv>2?44:38);
+  if(L4)kubah(2.98,2.98);if(lv>1){mn(3.55,.45);mn(.45,3.55)}if(lv>2)mn(3.55,3.55);
+  if(L4){const a=P(3.7,2,5),b=P(2,3.7,5);umbul(g,a[0],a[1],'#2f8458');umbul(g,b[0],b[1],'#2f8458');const l1=P(3.75,1.2,5),l2=P(1.2,3.75,5);lentera(g,l1[0],l1[1]);lentera(g,l2[0],l2[1]);const f1=P(3.75,3.1,5),f2=P(3.1,3.75,5);bunga(g,f1[0],f1[1]);bunga(g,f2[0],f2[1])}}
 function bTree(g,v){shadowE(g,8,4,26,11,.24);if(v===3){g.strokeStyle='#a8784a';g.lineWidth=5;g.lineCap='round';g.beginPath();g.moveTo(0,0);g.quadraticCurveTo(7,-26,3,-52);g.stroke();
     for(let k=0;k<8;k++){const a=k/8*Math.PI*2,ex=3+Math.cos(a)*26,ey=-52+Math.sin(a)*10+9;g.fillStyle=k%2?'#5aa84a':'#7cc45a';g.beginPath();g.moveTo(3,-52);g.quadraticCurveTo((3+ex)/2,-64,ex,ey);g.quadraticCurveTo((3+ex)/2,-54,3,-52);g.fill()}return}
   const sc=v===2?.62:v===1?1.12:1;g.fillStyle='#a07048';g.beginPath();g.roundRect?g.roundRect(-3.5,-16*sc,7,16*sc,3):g.rect(-3.5,-16*sc,7,16*sc);g.fill();
@@ -132,9 +134,9 @@ function blit(s,x,y,k=1){ctx.drawImage(s.c,x-s.ax*k,y-s.ay*k,s.w*k,s.h*k)}
 function spr(key,w,h,ax,ay,fn){let s=SPR.get(key);if(s)return s;const c=document.createElement('canvas');c.width=Math.ceil(w*SS);c.height=Math.ceil(h*SS);const g=c.getContext('2d');g.setTransform(SS,0,0,SS,ax*SS,ay*SS);DK=0;fn(g);DK=0;s={c,w,h,ax,ay};SPR.set(key,s);return s}
 const FN={rumah:bRumah,menara:bMenara,asrama:bAsrama,benteng:bBenteng};
 function plotSprite(p,state){if(state==='rival')return spr('camp',180,290,90,200,g=>bCamp(g));
-  const b=bget(p.j,p.q);if(!b||!b.lv)return spr('fon',180,290,90,200,bFondasi);const s=str(p.j,p.q);if(s<=0)return spr('ruin',180,290,90,200,bRuin);
+  const b=bget(p.j,p.q);if(!b||!b.lv)return spr('fon',180,290,90,200,bFondasi);if(b.rt&&b.rt>Date.now()&&window.bPerancah)return spr('perancah',180,290,90,200,bPerancah);const s=str(p.j,p.q);if(s<=0)return spr('ruin',180,290,90,200,bRuin);
   const db=s>=70?0:s>=50?1:s>=30?2:3,t=S.view;return spr(`${p.kind}|${b.lv}|${t}|${db}`,180,290,90,200,g=>{DK=[0,.3,.55,.8][db];const zb=bBase(g,b.lv);const bb=FN[p.kind](g,b.lv,t,zb);hiasDepan(g,b.lv,zb);if(db>=2)cracks(g,bb,p.q*7+b.lv+p.j)})}
-const mLv=()=>{const b=builtIn(S.view);return 1+(b>=6)+(b>=14)};
+const mLv=()=>{const b=builtIn(S.view);return 1+(b>=6)+(b>=14)+(b>=20)};
 
 /* ---------- tata letak & tanah ---------- */
 function tileKind(i,j){if(i<BB-1||j<BB-1||i>MM-BB-1||j>MM-BB-1)return'out';if(i===BB-1||j===BB-1)return'road';const li=(i-BB)%7,lj=(j-BB)%7;if(li>=5||lj>=5)return'road';
@@ -143,12 +145,12 @@ function layoutHub(){const t=S.view,js=tierJuz(t);
   terr=js.map((j,k)=>{const [bx,by]=TBLK[k],i0=BB+bx*BS,j0=BB+by*BS;return{j,k,i0,j0,plots:PLOT.map(([px,py],q)=>({j,q,gi:i0+px*3,gj:j0+py*3,kind:KINDS[(q+k)%4]}))}});
   plots=terr.flatMap(x=>x.plots);masjid={gi:BB+BS+1,gj:BB+BS+1};const r=mulb(7+t);trees=[];
   for(let i=-5;i<MM+5;i++)for(let j=-5;j<MM+5;j++){if(tileKind(i,j)==='out'&&r()<.5)trees.push({i:i+.2+r()*.6,j:j+.2+r()*.6,v:Math.floor(r()*4)})}
-  for(const [bx,by,ty] of DBLK){const i0=BB+bx*BS,j0=BB+by*BS;if(ty==='hutan')for(let k=0;k<13;k++)trees.push({i:i0+.5+r()*4.2,j:j0+.5+r()*4.2,v:Math.floor(r()*3)});if(ty==='kolam'){[[.3,.3],[4.6,.5],[.4,4.5],[4.5,4.4]].forEach(([a,b])=>trees.push({i:i0+a,j:j0+b,v:3}))}}
+  for(const [bx,by,ty] of DBLK){const i0=BB+bx*BS,j0=BB+by*BS;if(ty==='lapangan')for(let k=0;k<13;k++){r();r();r()}if(ty==='kolam'){[[.3,.3],[4.6,.5],[.4,4.5],[4.5,4.4]].forEach(([a,b])=>trees.push({i:i0+a,j:j0+b,v:3}))}}
   [[BB+BS+.4,BB+BS+.4],[BB+BS+5.2,BB+BS+.4],[BB+BS+.4,BB+BS+5.2]].forEach(([a,b])=>trees.push({i:a,j:b,v:2}));
   lamps=[];for(let a=0;a<3;a++)for(let b=0;b<3;b++)lamps.push({i:BB+a*BS+5.5,j:BB+b*BS+5.5});
   if(ROT){for(const tr of terr)[tr.i0,tr.j0]=rotKotak(tr.i0,tr.j0,5);for(const p of plots)[p.gi,p.gj]=rotKotak(p.gi,p.gj,2);[masjid.gi,masjid.gj]=rotKotak(masjid.gi,masjid.gj,4);for(const o of trees)[o.i,o.j]=rotTitik(o.i,o.j);for(const l of lamps)[l.i,l.j]=rotTitik(l.i,l.j)}
   if(window.aturTetangga){treesAll=trees.slice();aturTetangga()}
-  buildGround()}
+  buildGround();if(window.wargaAtur)wargaAtur()}
 function buildGround(){const pad=280,w=MM*64+pad*2,h=MM*32+pad*2;GS=Math.min(2,Math.max(1,dpr),Math.sqrt(10e6/(w*h)));
   GC=document.createElement('canvas');GC.width=Math.ceil(w*GS);GC.height=Math.ceil(h*GS);const g=GC.getContext('2d');gox=MM*32+pad;goy=pad;
   const [g1,g2]=TIERS[S.view].g;g.fillStyle=C(g2,-.1);g.fillRect(0,0,GC.width,GC.height);g.setTransform(GS,0,0,GS,gox*GS,goy*GS);const r=mulb(11);
@@ -164,6 +166,9 @@ function buildGround(){const pad=280,w=MM*64+pad*2,h=MM*32+pad*2;GS=Math.min(2,M
     if(ty==='kolam'){const ring=(rad)=>{g.beginPath();for(let a=0;a<=64;a++){const t=a/64*Math.PI*2,[x,y]=Q(i0+2.5+Math.cos(t)*rad*(1+.08*Math.sin(t*3)),j0+2.5+Math.sin(t)*rad*(1+.08*Math.cos(t*2)));a?g.lineTo(x,y):g.moveTo(x,y)}g.closePath()};
       ring(2.35);g.fillStyle='#f3e4c0';g.fill();ring(2.05);const [cx,cy]=Q(i0+2.5,j0+2.5);const wg=g.createRadialGradient(cx-30,cy-14,8,cx,cy,90);wg.addColorStop(0,'#bfe9f6');wg.addColorStop(1,'#78c2e0');g.fillStyle=wg;g.fill();
       for(let q=0;q<5;q++){g.fillStyle='#7cc45a';g.beginPath();g.ellipse(cx+(r()-.5)*90,cy+(r()-.5)*36,7,3.5,0,.3,Math.PI*2-.3);g.fill()}}
+    if(ty==='lapangan'){dia(i0+.22,j0+.22,4.56,4.56,1);g.fillStyle='#d9bf8a';g.fill();dia(i0+.32,j0+.32,4.36,4.36,1);g.fillStyle='#e8d3a2';g.fill();dia(i0+.55,j0+.55,3.9,3.9,1);g.strokeStyle='rgba(255,255,255,.6)';g.lineWidth=1.6;g.stroke();
+      for(let q=0;q<26;q++){const [x,y]=Q(i0+.6+r()*3.8,j0+.6+r()*3.8);g.fillStyle='rgba(160,120,70,.18)';g.beginPath();g.ellipse(x,y,2.4,1.2,0,0,7);g.fill()}
+      for(const [a,b] of [[.25,4.6],[4.6,.25],[4.7,4.7]]){const [x,y]=Q(i0+a,j0+b);semak(g,x,y,6)}}
     if(ty==='kebun'){for(let a=0;a<4;a++){dia(i0+.4+a*1.2,j0+.5,.85,4.3,1);g.fillStyle='#c9a072';g.fill();for(let b=0;b<6;b++){const [x,y]=Q(i0+.82+a*1.2,j0+.85+b*.7);const gr=g.createRadialGradient(x-1.5,y-5,1,x,y-3,6);gr.addColorStop(0,'#a8e07a');gr.addColorStop(1,'#5aa83e');g.fillStyle=gr;g.beginPath();g.arc(x,y-3,5.5,0,7);g.fill()}}}}
   for(let q=0;q<6;q++){const [x,y]=P(r()*MM,r()*MM);const lg=g.createRadialGradient(x,y,10,x,y,220);lg.addColorStop(0,'rgba(255,255,230,.12)');lg.addColorStop(1,'rgba(255,255,230,0)');g.fillStyle=lg;g.fillRect(x-220,y-220,440,440)}}
 
@@ -172,7 +177,7 @@ const SPARK=['#fff7d0','#ffe07a','#b8f08a','#ffffff'];
 function burst(x,y,n,cols,sp=70,up=60,life=.9,size=3){for(let k=0;k<n;k++)parts.push({x,y,vx:(rnd0()-.5)*sp*2,vy:-rnd0()*up-10,l:life,m:life,c:pick(cols),s:size*(.6+rnd0()*.8),g:130})}
 function floatText(x,y,t,c){parts.push({x,y,vx:0,vy:-34,l:1.3,m:1.3,t,c,g:0})}
 const tstate=tr=>owned(tr.j)?'own':isOpen(tr.j)?'rival':'lock';
-const topZ=p=>{const b=bget(p.j,p.q);if(!b||!b.lv)return 18;if(str(p.j,p.q)<=0)return 16;return p.kind==='menara'?[0,56,74,92][b.lv]+60:p.kind==='rumah'?(b.lv>1?40:26)+34:p.kind==='asrama'?[0,22,32,42][b.lv]+30:[0,22,28,34][b.lv]+50};
+const topZ=p=>{const b=bget(p.j,p.q);if(!b||!b.lv)return 18;if(b.rt&&b.rt>Date.now())return 58;if(str(p.j,p.q)<=0)return 16;return p.kind==='menara'?[0,56,74,92][b.lv]+60:p.kind==='rumah'?(b.lv>1?40:26)+34:p.kind==='asrama'?[0,22,32,42][b.lv]+30:[0,22,28,34][b.lv]+50};
 
 /* ---------- render ---------- */
 function w2s(x,y){return[(x-cam.x)*cam.z+W/2,(y-cam.y)*cam.z+H/2]}
@@ -192,7 +197,7 @@ function frameHub(ms){const t=ms/1000,dt=Math.min(.05,t-(frameHub.t||t));frameHu
   const L=[];
   for(const tr of terr){const st=tstate(tr);if(st==='lock'){L.push([tr.i0+tr.j0+11,0,tr]);continue}for(const p of tr.plots)L.push([p.gi+p.gj+2,1,p,st])}
   if(reveal.j){const tr=terr.find(x=>x.j===reveal.j);if(tr&&T-reveal.t<1.6)L.push([tr.i0+tr.j0+11,0,tr,'fade'])}
-  L.push([masjid.gi+masjid.gj+4,2]);if(window.tetanggaKeDaftar)tetanggaKeDaftar(L);for(const tr of trees)L.push([tr.i+tr.j,3,tr]);for(const l of lamps)L.push([l.i+l.j,4,l]);
+  L.push([masjid.gi+masjid.gj+4,2]);if(window.tetanggaKeDaftar)tetanggaKeDaftar(L);for(const tr of trees)L.push([tr.i+tr.j,3,tr]);for(const l of lamps)L.push([l.i+l.j,4,l]);if(window.wargaKeDaftar)wargaKeDaftar(L,dt);
   L.sort((a,b)=>a[0]-b[0]);
   const xr=sel?(sel==='masjid'?kotakLayar(masjid.gi,masjid.gj,4,150,masjid.gi+masjid.gj+4):sel.gi!=null?kotakLayar(sel.gi,sel.gj,2,topZ(sel),sel.gi+sel.gj+2):null):null;
   const tembus=(d,gi,gj,n,h)=>{if(!xr||d<=xr.d)return false;const b=kotakLayar(gi,gj,n,h,d);return b.x1<xr.x2&&b.x2>xr.x1&&b.y1<xr.y2&&b.y2>xr.y1};
@@ -206,11 +211,13 @@ function frameHub(ms){const t=ms/1000,dt=Math.min(.05,t-(frameHub.t||t));frameHu
     else if(k===2){const s=spr('masjid'+mLv(),300,320,150,176,g=>bMasjid(g,mLv()));const [x,y]=P(masjid.gi,masjid.gj);if(sel==='masjid'){const a=.3+.3*Math.sin(T*6);poly(ctx,[P(masjid.gi-.1,masjid.gj-.1),P(masjid.gi+4.1,masjid.gj-.1),P(masjid.gi+4.1,masjid.gj+4.1),P(masjid.gi-.1,masjid.gj+4.1)],`rgba(255,226,120,${a})`)}if(sel!=='masjid'&&tembus(d,masjid.gi,masjid.gj,4,150))ctx.globalAlpha=.28;blit(s,x,y);ctx.globalAlpha=1}
     else if(k===3){const [x,y]=P(o.i,o.j);if(tembus(d,o.i-.6,o.j-.6,1.2,90))ctx.globalAlpha=.3;blit(spr('tree'+o.v,110,130,55,104,g=>bTree(g,o.v)),x,y);ctx.globalAlpha=1}
     else if(k===5){gambarTetangga(o)}
+    else if(k===6){gambarWarga(o)}
     else{const [x,y]=P(o.i,o.j);line(ctx,[[x,y],[x,y-24]],'#7a5a48',2.4);ctx.fillStyle='#7a5a48';ctx.fillRect(x-4,y-30,8,7);const a=.45+.2*Math.sin(T*3+o.i);const gl=ctx.createRadialGradient(x,y-27,1,x,y-27,13);gl.addColorStop(0,`rgba(255,226,130,${a+.3})`);gl.addColorStop(1,'rgba(255,226,130,0)');ctx.fillStyle=gl;ctx.beginPath();ctx.arc(x,y-27,13,0,7);ctx.fill();ctx.fillStyle='#fff0b0';ctx.fillRect(x-2.5,y-29,5,4.5)}}
+  if(window.wargaDiAtas)wargaDiAtas();
   for(const q of parts){const a=q.l/q.m;if(q.t){ctx.font=`800 ${18/cam.z}px 'Baloo 2',sans-serif`;ctx.textAlign='center';ctx.lineWidth=4/cam.z;ctx.strokeStyle=`rgba(255,255,255,${a})`;ctx.globalAlpha=a;ctx.strokeText(q.t,q.x,q.y);ctx.fillStyle=q.c;ctx.fillText(q.t,q.x,q.y);ctx.globalAlpha=1}
     else{ctx.globalAlpha=q.sm?a*.4:a;ctx.fillStyle=q.c;ctx.beginPath();ctx.arc(q.x,q.y,q.sm?q.s*(2-a):q.s,0,7);ctx.fill();ctx.globalAlpha=1}}
   if(window.alamHub){const lampu=[];for(const l of lamps){const [x,y]=P(l.i,l.j);lampu.push([x,y-27,48,1])}{const [x,y]=P(masjid.gi+2,masjid.gj+2);lampu.push([x,y-46,118,.75])}if(window.TET)for(const n of TET.list){const [x,y]=P(n.i+2,n.j+2);lampu.push([x,y-36,120,.55])}
-    for(const tr of terr){if(tstate(tr)!=='own')continue;for(const p of tr.plots){const b=bget(p.j,p.q);if(b&&b.lv){const [x,y]=P(p.gi+1,p.gj+1);lampu.push([x,y-20,40+b.lv*6,.5])}}}
+    for(const tr of terr){if(tstate(tr)!=='own')continue;for(const p of tr.plots){const b=bget(p.j,p.q);if(b&&b.lv){const [x,y]=P(p.gi+1,p.gj+1);lampu.push([x,y-20,40+b.lv*6,.5])}}}if(window.wargaLampu)wargaLampu(lampu);
     alamHub(ctx,cv.width,cv.height,dpr,dt,()=>ctx.setTransform(z,0,0,z,cv.width/2-cam.x*z,cv.height/2-cam.y*z),lampu)}
   ctx.setTransform(dpr,0,0,dpr,0,0);if(window.pilTetangga)pilTetangga();
   const nl=nextLocked(S.view);
@@ -219,9 +226,11 @@ function frameHub(ms){const t=ms/1000,dt=Math.min(.05,t-(frameHub.t||t));frameHu
     else if(st==='rival')pill(sx,sy,`Juz ${tr.j}`,'Rebut lewat Duel','#e2eefc','#2f5a9a','#5a8ad0');
     else if(tr.j===nl&&juzOk(tr.j)){const [cx,cy]=w2s(...P(tr.i0+2.75,tr.j0+2.75,90));pill(cx,cy+Math.sin(T*3)*3,`Juz ${tr.j}`,'Buka lewat Rihlah','#ffe9c8','#a0482a','#f08a5a')}
     else{const [cx,cy]=w2s(...P(tr.i0+2.75,tr.j0+2.75,90));pill(cx,cy,`Juz ${tr.j}`,juzOk(tr.j)?'Belum terjangkau':'Belum disetorkan','rgba(255,255,255,.85)','#8a8090')}}
+  if(window.misiPenanda)misiPenanda();
   const showN=cam.z>=.8;
   for(const p of plots){if(!owned(p.j))continue;const b=bget(p.j,p.q),built=b&&b.lv>0;
     if(!built){const [wx,wy]=P(p.gi+1,p.gj+1,30),[sx,sy]=w2s(wx,wy+Math.sin(T*4+p.q)*3/cam.z);ctx.fillStyle='rgba(60,30,30,.15)';ctx.beginPath();ctx.arc(sx,sy+3,13,0,7);ctx.fill();ctx.fillStyle='#ffe48a';ctx.beginPath();ctx.arc(sx,sy,13,0,7);ctx.fill();ctx.fillStyle='#a0482a';ctx.fillRect(sx-6,sy-1.6,12,3.2);ctx.fillRect(sx-1.6,sy-6,3.2,12);continue}
+    if(b.rt&&b.rt>Date.now()){const [bx,by]=w2s(...P(p.gi+1,p.gj+1,topZ(p)+8));pill(bx,by,window.fmtSisa?fmtSisa(b.rt-Date.now()):'…','dibangun ulang','#fff0e0','#a0482a','#f08a5a');continue}
     const s=str(p.j,p.q);if(!(showN||sel===p||s<70))continue;const [wx,wy]=P(p.gi+1,p.gj+1,topZ(p)+8),[bx,by]=w2s(wx,wy);
     ctx.fillStyle='rgba(255,250,242,.95)';ctx.beginPath();ctx.roundRect(bx-30,by-7,60,14,7);ctx.fill();ctx.fillStyle=s>=70?'#7cd05a':s>=40?'#f5c542':'#ff7a65';if(s>0){ctx.beginPath();ctx.roundRect(bx-27,by-4,Math.max(6,54*s/100),8,4);ctx.fill()}
     ctx.font="800 11px 'Baloo 2',sans-serif";ctx.textBaseline='middle';ctx.fillStyle='#a03c4c';ctx.fillText('Lv'+b.lv,bx-40,by+1)}}
@@ -241,6 +250,7 @@ function kenaPiksel(s,x,y,wx,wy){const lx=wx-(x-s.ax),ly=wy-(y-s.ay);if(lx<0||ly
   try{if(!s.g)s.g=s.c.getContext('2d');return s.g.getImageData(Math.floor(lx*SS),Math.floor(ly*SS),1,1).data[3]>40}catch(e){return true}}
 /* ketukan: tanda + dan label level dulu, lalu piksel bangunan yang benar-benar terlihat (depan ke belakang), lalu petak tanah */
 function hitTest(sx,sy){const [wx,wy]=s2w(sx,sy);
+  if(window.WARGA&&WARGA.pil)for(const r of WARGA.pil)if(Math.abs(sx-r.x)<=r.w/2&&Math.abs(sy-r.y)<=19)return r.o;
   for(const p of plots){if(!owned(p.j))continue;const b=bget(p.j,p.q);if(!(b&&b.lv)){const [mx,my]=w2s(...P(p.gi+1,p.gj+1,30));if(Math.hypot(sx-mx,sy-my)<=24)return p}}
   for(const p of plots){if(!owned(p.j))continue;const b=bget(p.j,p.q);if(!(b&&b.lv))continue;const s=str(p.j,p.q);if(!(cam.z>=.8||sel===p||s<70))continue;const [bx,by]=w2s(...P(p.gi+1,p.gj+1,topZ(p)+8));if(Math.abs(sx-bx)<=62&&Math.abs(sy-by)<=15)return p}
   const cand=[];for(const p of plots)if(owned(p.j))cand.push([p.gi+p.gj+2,p,plotSprite(p,'own'),P(p.gi,p.gj)]);
@@ -251,12 +261,13 @@ function hitTest(sx,sy){const [wx,wy]=s2w(sx,sy);
   if(ti>=masjid.gi&&ti<=masjid.gi+4&&tj>=masjid.gj&&tj<=masjid.gj+4)return'masjid';
   let best=null,bd=-1;const test=(gi,gj,n,h,o)=>{const x1=P(gi,gj+n)[0],x2=P(gi+n,gj)[0],y1=P(gi,gj)[1]-h,y2=P(gi+n,gj+n)[1];if(wx>=x1&&wx<=x2&&wy>=y1&&wy<=y2&&gi+gj>bd){bd=gi+gj;best=o}};
   if(window.ujiTetangga)ujiTetangga(test);if(best)return best;
+  if(window.blokDeko){const kl=blokDeko('kolam'),lp=blokDeko('lapangan');if(kl&&Math.hypot(ti-kl.c[0],tj-kl.c[1])<2.7)return'kolam';if(lp&&Math.abs(ti-lp.c[0])<2.6&&Math.abs(tj-lp.c[1])<2.6)return'barak'}
   for(const tr of terr){if(ti>=tr.i0-.5&&ti<=tr.i0+5.5&&tj>=tr.j0-.5&&tj<=tr.j0+5.5)return{terr:tr}}
   for(const tr of terr){if(tstate(tr)!=='lock')continue;const [cx,cy]=P(tr.i0+2.75,tr.j0+2.75,60);if(Math.abs(wx-cx)<190&&Math.abs(wy-cy)<110)return{terr:tr}}return null}
-function tap(x,y){if(qOpenFlag)return;const h=hitTest(x,y);if(h==='masjid')openMasjid();else if(h&&h.terr)openTerr(h.terr);else if(h&&h.tet)bukaTetangga(h.tet);else if(h)openPlot(h);else closeSheet()}
+function tap(x,y){if(qOpenFlag)return;const h=hitTest(x,y);if(window.sfx)sfx('ketuk');if(h==='masjid')openMasjid();else if(h==='kolam'&&window.bukaKolam)bukaKolam();else if(h==='barak'&&window.bukaBarak)bukaBarak();else if(h&&h.terr)openTerr(h.terr);else if(h&&h.tet)bukaTetangga(h.tet);else if(h)openPlot(h);else closeSheet()}
 
 /* ---------- HUD & lembar ---------- */
-function hud(pop){$('gold').textContent=S.gold;$('pas').textContent=S.pas;if(window.misiBadge)misiBadge();const v=S.view,own=tierJuz(v).filter(owned).length;$('tierT').textContent=window.judulDesa?judulDesa(v):TIERS[v].nm;if($('lvB'))$('lvB').textContent=window.levelSaya?levelSaya():1;$('tierS').textContent=`${tierRange(v)} · ${own}/5 wilayah`;
+function hud(pop){$('gold').textContent=S.gold;$('pas').textContent=S.pas;if(window.hudPasukan)hudPasukan();if(window.misiBadge)misiBadge();const v=S.view,own=tierJuz(v).filter(owned).length;$('tierT').textContent=window.judulDesa?judulDesa(v):TIERS[v].nm;if($('lvB'))$('lvB').textContent=window.levelSaya?levelSaya():1;$('tierS').textContent=`${tierRange(v)} · ${own}/5 wilayah`;
   if(pop){const g=$(pop);g.classList.remove('pop');void g.offsetWidth;g.classList.add('pop')}
   const up=v===S.tier&&S.tier<maxTier()&&tierDone(v);$('lvUp').hidden=!up;if(up)$('lvUp').textContent=`Naik ke ${TIERS[v+1].nm}`;
   const nl=nextLocked(v),rok=!!nl&&juzOk(nl);$('dR').classList.toggle('hot',rok);$('dR').classList.toggle('dim',!rok);$('dD').classList.toggle('hot',!!nextRival(v));$('dD').classList.toggle('dim',!nextRival(v))}
@@ -270,14 +281,17 @@ const head=(t,s,ar)=>`<div class="shead"><div class="t">${esc(t)}<small>${esc(s)
 const COIN='<svg><use href="#i-coin"/></svg>';
 const status=s=>s>=70?'Terawat':s>=40?'Mulai berdebu':s>0?'Retak, segera murajaah':'Runtuh, murajaah untuk membangun ulang';
 function openPlot(p){sel=p;const b=bget(p.j,p.q),lv=b?b.lv:0,lbl=segLabel(p.j,p.q);let body;
-  if(!lv)body=`<p class="p">Fondasi ${KNM[p.kind].toLowerCase()} untuk <b>${esc(lbl)}</b>. Jawab minimal 3 dari 5 soal dengan benar untuk mendirikannya.</p><button class="btn b-green wide" id="goB">Bangun lewat murajaah</button>`;
+  const rt=lv&&window.runtuhSisa?runtuhSisa(p.j,p.q):0;
+  if(rt)body=`<p class="p"><b>Runtuh</b> karena serangan${b.oleh?` dari <b>${esc(b.oleh)}</b>`:''}. Para tukang sedang membangun ulang ${KNM[p.kind].toLowerCase()} Lv${lv} ini, selesai dalam <b id="rtSisa">${fmtSisa(rt)}</b>.</p><button class="btn b-green wide" id="goP">Percepat lewat murajaah · 5 soal</button><p class="note">Jawab minimal 3 dengan benar untuk langsung membangunnya kembali.</p>`;
+  else if(!lv)body=`<p class="p">Fondasi ${KNM[p.kind].toLowerCase()} untuk <b>${esc(lbl)}</b>. Jawab minimal 3 dari 5 soal dengan benar untuk mendirikannya.</p><button class="btn b-green wide" id="goB">Bangun lewat murajaah</button>`;
   else{const s=str(p.j,p.q),col=s>=70?'#7cd05a':s>=40?'#f0b83a':'#ff7a65',cost=COST[p.kind][lv]||0,canU=lv<3&&S.gold>=cost&&s>=80;
     const why=lv>=3?'Sudah level tertinggi.':s<80?'Butuh kekuatan minimal 80% untuk meningkatkan.':S.gold<cost?`Butuh ${cost} emas. Kumpulkan dari murajaah.`:`Level ${lv+1} memudar lebih lambat (${RATE[lv+1]}% per hari).`;
     body=`<div class="meter"><i style="width:${s}%;background:${col}"></i><span>${Math.round(s)}%</span></div><p class="p"><b>${status(s)}</b>. Memudar ${RATE[lv]}% per hari bila tidak diulang.</p>
     <div class="row"><button class="btn b-green" id="goM">Murajaah · 5 soal</button>${lv<3?`<button class="btn b-gold" id="goU" ${canU?'':'disabled'}>${COIN}Tingkatkan · ${cost}</button>`:''}</div><p class="note">${why}</p>`}
-  sheet(head(`Bagian ${p.q+1} · Juz ${p.j}`,`${lv?KNM[p.kind]+' Lv'+lv:'Fondasi'} · ${lbl}`)+`<div class="sb">${body}</div>`);focusPlot(p,.3);
+  sheet(head(`Bagian ${p.q+1} · Juz ${p.j}`,`${lv?KNM[p.kind]+' Lv'+lv+(rt?' · runtuh':''):'Fondasi'} · ${lbl}`)+`<div class="sb">${body}</div>`);focusPlot(p,.3);if(rt&&window.hitungMundur)hitungMundur('rtSisa',b.rt,()=>{if(sel===p)openPlot(p)});
+  if($('goP'))$('goP').onclick=()=>hubQuiz('pulih',p);
   if($('goB'))$('goB').onclick=()=>hubQuiz('build',p);if($('goM'))$('goM').onclick=()=>hubQuiz('mur',p);
-  if($('goU'))$('goU').onclick=()=>{const c=COST[p.kind][lv];if(S.gold<c)return;S.gold-=c;b.lv++;setStr(p.j,p.q,str(p.j,p.q));p.pop=T;const [x,y]=P(p.gi+1,p.gj+1,topZ(p));burst(x,y,30,['#ffe07a','#fff7d0','#f8b4c4'],110,90,1.1,3.5);save();hud('goldP');toast(`Bagian ${p.q+1} naik ke Lv ${b.lv}. Sekarang memudar ${RATE[b.lv]}% per hari.`);openPlot(p)}}
+  if($('goU'))$('goU').onclick=()=>{const c=COST[p.kind][lv];if(S.gold<c)return;S.gold-=c;b.lv++;setStr(p.j,p.q,str(p.j,p.q));p.pop=T;const [x,y]=P(p.gi+1,p.gj+1,topZ(p));burst(x,y,30,['#ffe07a','#fff7d0','#f8b4c4'],110,90,1.1,3.5);if(window.sfx)sfx('naik');save();hud('goldP');toast(`Bagian ${p.q+1} naik ke Lv ${b.lv}. Sekarang memudar ${RATE[b.lv]}% per hari.`);openPlot(p)}}
 function openTerr(tr){sel=null;const st=tstate(tr),j=tr.j,nl=nextLocked(S.view);let body='';
   const rows=tr.plots.map(p=>{const b=bget(p.j,p.q),lv=b&&b.lv,s=lv?str(p.j,p.q):0;return`<div class="li"><div><b>Bagian ${p.q+1}</b><small>${esc(segLabel(j,p.q))}</small></div>${st!=='own'?'':lv?`<span class="tag ${s>=70?'ok':s>0?'':'red'}">Lv${lv} · ${Math.round(s)}%</span>`:`<span class="tag">Fondasi</span>`}</div>`}).join('');
   if(st==='lock')body=!juzOk(j)?`<p class="p">Juz ${j} <b>belum disetorkan</b>. Wilayah ini bisa dijelajahi setelah hafalanmu sampai di sini. Semangat menambah hafalan!</p>`:j===nl?`<p class="p">Wilayah ini masih tertutup awan. Tempuh <b>Rihlah</b> melewati 4 bagian juz ini dan kalahkan penjaganya untuk membukanya.</p><button class="btn b-maroon wide" id="tR">Mulai Rihlah ke Juz ${j}</button>`:`<p class="p">Buka dulu wilayah sebelumnya. Urutan wilayah mengikuti urutan juz hafalan.</p>`;
@@ -286,10 +300,10 @@ function openTerr(tr){sel=null;const st=tstate(tr),j=tr.j,nl=nextLocked(S.view);
   sheet(head(`Juz ${j}`,`Wilayah ${tr.k+1} dari 5 · ${st==='own'?'milikmu':st==='rival'?'dikuasai lawan':'tertutup awan'}`)+`<div class="sb"><div class="list">${rows}</div>${body}</div>`);focusTerr(tr,.3);
   if($('tR'))$('tR').onclick=()=>startRihlah(j);if($('tD'))$('tD').onclick=()=>startDuel(j);if($('tG'))$('tG').onclick=()=>startGarda(j)}
 function openMasjid(){sel='masjid';const v=S.view,own=tierJuz(v).filter(owned).length,b=builtIn(v),done=tierDone(v);
-  sheet(head(`Masjid ${window.judulDesa?judulDesa(v):TIERS[v].nm}`,`${tierRange(v)} · Masjid Lv ${mLv()}`)+`<div class="sb"><div class="li namad"><div><b>${esc(window.judulDesa?judulDesa(S.tier):TIERS[S.tier].nm)}</b><small>Level pemain ${window.levelSaya?levelSaya():1} · nama terlihat oleh pemain lain</small></div><button class="btn b-soft" id="mNama">Ganti nama</button></div><div class="grid2"><div class="stat"><b>${own}/5</b>wilayah dikuasai</div><div class="stat"><b>${b}/20</b>bangunan berdiri</div></div>
-  <p class="p">${done?(v<5?(v<maxTier()?`Seluruh ${TIERS[v].nm.toLowerCase()} sudah kamu kuasai. Saatnya naik ke <b>${TIERS[v+1].nm}</b> (${tierRange(v+1)}).`:`Seluruh ${TIERS[v].nm.toLowerCase()} sudah kamu kuasai. ${TIERS[v+1].nm} terbuka setelah hafalanmu sampai Juz ${tierJuz(v+1)[0]}.`):'Seluruh 30 juz sudah kamu kuasai. Masya Allah!'):`Kuasai kelima wilayah dan dirikan 20 bangunan untuk naik ke ${v<5?TIERS[v+1].nm:'puncak'}. Masjid tumbuh tiap 6 dan 14 bangunan berdiri.`}</p>
+  sheet(head(`Masjid ${window.judulDesa?judulDesa(v):TIERS[v].nm}`,`${tierRange(v)} · Masjid Lv ${mLv()}`)+`<div class="sb"><div class="li namad"><div><b>${esc(window.judulDesa?judulDesa(S.tier):TIERS[S.tier].nm)}</b><small>Level pemain ${window.levelSaya?levelSaya():1} · nama terlihat oleh pemain lain</small></div><button class="btn b-soft" id="mNama">Ganti nama</button></div>${window.kartuTilawah?kartuTilawah():''}<div class="grid2"><div class="stat"><b>${own}/5</b>wilayah dikuasai</div><div class="stat"><b>${b}/20</b>bangunan berdiri</div></div>
+  <p class="p">${done?(v<5?(v<maxTier()?`Seluruh ${TIERS[v].nm.toLowerCase()} sudah kamu kuasai. Saatnya naik ke <b>${TIERS[v+1].nm}</b> (${tierRange(v+1)}).`:`Seluruh ${TIERS[v].nm.toLowerCase()} sudah kamu kuasai. ${TIERS[v+1].nm} terbuka setelah hafalanmu sampai Juz ${tierJuz(v+1)[0]}.`):'Seluruh 30 juz sudah kamu kuasai. Masya Allah!'):`Kuasai kelima wilayah dan dirikan 20 bangunan untuk naik ke ${v<5?TIERS[v+1].nm:'puncak'}. Masjid tumbuh tiap 6, 14, dan 20 bangunan berdiri. Mulai Lv 3, masjid ikut menyerang saat desa diserang.`}</p>
   ${done&&v===S.tier&&v<maxTier()?`<button class="btn b-gold wide" id="mUp">Naik ke ${TIERS[v+1].nm}</button>`:''}</div>`);
-  focusAt(...P(masjid.gi+2,masjid.gj+2,50),.32);if($('mUp'))$('mUp').onclick=tierUp;if($('mNama'))$('mNama').onclick=()=>{closeSheet();bukaNamaDesa(()=>openMasjid())}}
+  focusAt(...P(masjid.gi+2,masjid.gj+2,50),.32);if($('mUp'))$('mUp').onclick=tierUp;if($('mNama'))$('mNama').onclick=()=>{closeSheet();bukaNamaDesa(()=>openMasjid())};if($('mTil'))$('mTil').onclick=()=>{closeSheet();bukaTilawah()}}
 function openPeta(){const mt=maxTier(),admin=NET.demo||(NET.me&&NET.me.peran==='admin');
   const rows=TIERS.map((t,i)=>{const un=i<=S.tier,own=tierJuz(i).filter(owned).length;return`<div class="li"><div><b>${t.nm}</b><small>${tierRange(i)}${un?` · ${own}/5 wilayah · ${builtIn(i)}/20 bangunan`:i>mt?' · butuh hafalan sampai Juz '+tierJuz(i)[0]:''}</small></div>${un?(i===S.view?'<span class="tag ok">Sedang dilihat</span>':`<button class="btn b-soft" data-v="${i}">Lihat</button>`):'<span class="tag">Terkunci</span>'}</div>`}).join('');
   const P_=NET.P||{nama:'Mode coba',tipe:'demo'},banyakAnak=NET.me&&NET.me.peran==='wali'&&NET.me.anak.length>1;
@@ -299,12 +313,13 @@ function openPeta(){const mt=maxTier(),admin=NET.demo||(NET.me&&NET.me.peran==='
   <div class="list">${rows}</div>
   <p class="note" style="margin-bottom:8px">Bangunan di tingkat lama tetap memudar, jadi kunjungi lagi untuk murajaah.</p>
   ${admin?`<div class="list"><div class="li"><div><b>Uji coba (khusus admin)</b><small>Untuk mencoba alur tanpa menunggu</small></div></div></div>
-  <div class="row"><button class="btn b-soft" id="uDay">Lewati 1 hari</button><button class="btn b-soft" id="uAll">Kuasai semua wilayah tingkat ini</button><button class="btn b-soft" id="uNext">Buka tingkat berikutnya</button><button class="btn b-soft" id="uReset">Mulai dari awal</button></div>`:''}</div>`);
+  <div class="row"><button class="btn b-soft" id="uDay">Lewati 1 hari</button><button class="btn b-soft" id="uAll">Kuasai semua wilayah tingkat ini</button><button class="btn b-soft" id="uNext">Buka tingkat berikutnya</button><button class="btn b-soft" id="uSerang">Uji: desa diserang</button><button class="btn b-soft" id="uPas">+30 pasukan</button><button class="btn b-soft" id="uReset">Mulai dari awal</button></div>`:''}</div>`);
   $('sheet').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>viewTier(+b.dataset.v));
   $('pRank').onclick=openPeringkat;if($('pPasang'))$('pPasang').onclick=()=>{closeSheet();pasangApp()};if($('pOut'))$('pOut').onclick=netKeluar;if($('pGanti'))$('pGanti').onclick=()=>{netSimpanSekarang();closeSheet();routeMe(NET.me)};
   if(!admin)return;
   $('uDay').onclick=()=>{S.skip++;save();toast('Satu hari berlalu tanpa murajaah. Bangunan mulai memudar.');closeSheet()};
   $('uAll').onclick=()=>{tierJuz(S.view).forEach(j=>S.t[j]={open:1,own:1});save();hud();closeSheet();toast('Semua wilayah tingkat ini dikuasai (uji coba).')};
+  if($('uSerang'))$('uSerang').onclick=()=>{closeSheet();if(window.seranganUji)seranganUji()};if($('uPas'))$('uPas').onclick=()=>{S.pas=(S.pas||0)+30;save();hud('pasP');closeSheet();toast('+30 pasukan (uji coba).')};
   $('uNext').onclick=()=>{if(S.tier<maxTier()){S.tier++;save();viewTier(S.tier)}};
   $('uReset').onclick=e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Ketuk lagi untuk menghapus';return}S=DEF();S.v=2;save();viewTier(0)}}
 async function openPeringkat(){const show=async k=>{$('rkList').innerHTML='<p class="note">Memuat…</p>';const rows=await netPeringkat(k);$('rkList').innerHTML=rows.length?rows.map((r,i)=>`<div class="li"><b style="width:26px">${i+1}</b><div><b>${esc(r.nama)}</b><small>${TIERS[r.tingkat]?TIERS[r.tingkat].nm:''}${r.desa?' '+esc(r.desa):''} · Lv ${window.lvDari?lvDari(r.skor):1} · ${r.wilayah} wilayah</small></div><span class="tag ok">${r.skor}</span></div>`).join(''):`<p class="note">${NET.demo?'Papan peringkat tampil setelah masuk dengan akun Al-Hafizh.':'Belum ada pemain di kelompok ini.'}</p>`;
@@ -328,8 +343,10 @@ function hzShow(){const q=HZ.qs[HZ.i],p=HZ.p,last=HZ.i===HZ.qs.length-1;sel=p;fo
       save();hud(ok?'goldP':null);$('qD').innerHTML=dotsOf(HZ.qs,HZ.i);return ok?'+5 emas':''},
     onNext(){HZ.i++;if(HZ.i<HZ.qs.length)hzShow();else hzFinish()}})}
 function hzFinish(){closeQ();const m=HZ.mode,p=HZ.p,ok=HZ.ok,N=HZ.qs.length;let title,msg;
-  if(m==='build'){if(ok>=3){S.b[bkey(p.j,p.q)]={lv:1,s:Math.min(100,40+ok*12),t:now()};p.pop=T;p.grow=1;const [x,y]=P(p.gi+1,p.gj+1,10);burst(x,y,26,['#efe3c8','#d9c4a0','#fff7d0'],120,50,1,4);title='Bangunan berdiri!';msg=`${KNM[p.kind]} di bagian ${p.q+1} Juz ${p.j} berdiri dengan kekuatan ${Math.round(str(p.j,p.q))}%.`}
+  if(m==='build'){if(ok>=3){S.b[bkey(p.j,p.q)]={lv:1,s:Math.min(100,40+ok*12),t:now()};p.pop=T;p.grow=1;if(window.sfx)sfx('bangun');const [x,y]=P(p.gi+1,p.gj+1,10);burst(x,y,26,['#efe3c8','#d9c4a0','#fff7d0'],120,50,1,4);title='Bangunan berdiri!';msg=`${KNM[p.kind]} di bagian ${p.q+1} Juz ${p.j} berdiri dengan kekuatan ${Math.round(str(p.j,p.q))}%.`}
     else{title='Fondasi belum kokoh';msg=`Butuh minimal 3 jawaban benar, kamu benar ${ok} dari ${N}. Ulang dulu hafalan ${segLabel(p.j,p.q)}, lalu coba lagi.`}}
+  else if(m==='pulih'){const b=bget(p.j,p.q);if(ok>=3){if(b){delete b.rt;delete b.oleh}p.pop=T;p.grow=1;const [x,y]=P(p.gi+1,p.gj+1,10);burst(x,y,26,['#efe3c8','#d9c4a0','#fff7d0'],120,50,1,4);if(window.sfx)sfx('bangun');title='Berdiri lagi!';msg=`${KNM[p.kind]} di bagian ${p.q+1} Juz ${p.j} sudah dibangun kembali.`}
+    else{title='Belum cukup';msg=`Butuh minimal 3 jawaban benar, kamu benar ${ok} dari ${N}. Para tukang tetap bekerja${b&&b.rt?`, selesai dalam ${fmtSisa(b.rt-Date.now())}`:''}.`}}
   else{if(ok===N){S.gold+=15;HZ.gold+=15}title=ok===N?'Murajaah sempurna!':'Murajaah selesai';msg=`Kekuatan bagian ${p.q+1}: ${Math.round(HZ.s0)}% → ${Math.round(str(p.j,p.q))}%.${ok===N?' Bonus 15 emas.':''}`}
   const stars=ok===N?3:ok>=Math.ceil(N*.6)?2:ok>0?1:0,first=m==='build'&&ok>=3&&!(S.tut&2),gold=HZ.gold;save();hud('goldP');HZ=null;
   modal(`<header>${esc(title)}</header><div class="stars">${[0,1,2].map(i=>STAR(i<stars)).join('')}</div><div class="big">${ok}/${N}</div><p>${esc(msg)}</p><p><b>+${gold} emas</b></p>`,[{t:'Kembali ke peta',f:()=>{openPlot(p);if(first){S.tut|=2;save();setTimeout(()=>toast('Bangunan memudar tiap hari seperti hafalan. Murajaah untuk menjaganya, naikkan level supaya lebih awet.'),400)}}}])}
@@ -344,4 +361,4 @@ $('dD').onclick=()=>{const j=nextRival(S.view);if(!j){toast(nextLocked(S.view)?'
 $('dG').onclick=()=>{const own=terr.filter(t=>tstate(t)==='own');const rows=own.map(t=>{const bs=t.plots.filter(p=>bget(p.j,p.q)&&bget(p.j,p.q).lv),avg=bs.length?Math.round(bs.reduce((a,p)=>a+str(p.j,p.q),0)/bs.length):0;return`<div class="li"><div><b>Juz ${t.j}</b><small>${bs.length}/4 berdiri${bs.length?` · rata-rata ${avg}%`:''}</small></div><button class="btn b-plum" data-j="${t.j}">Garda</button></div>`}).join('');
   sheet(head('Garda Hafizh','Pilih wilayah yang dijaga')+`<div class="sb"><p class="p">Ghaflah menyerbu wilayah yang kamu pilih. Tiap Ghaflah yang dikalahkan menjadi <b>1 pasukan</b> untuk Duel, dan tiap jawaban benar memperkuat bangunan wilayah itu.</p><div class="list">${rows}</div></div>`);
   $('sheet').querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>startGarda(+b.dataset.j))};
-$('dP').onclick=openPeta;$('tierP').onclick=openMasjid;if($('putarB')){$('putarB').onclick=putarPeta;$('putarB').style.setProperty('--r',ROT*90+'deg')}if($('alamP'))$('alamP').onclick=()=>{if(window.alamBuka)alamBuka()};$('lvUp').onclick=tierUp;
+$('dP').onclick=openPeta;$('tierP').onclick=openMasjid;if($('putarB')){$('putarB').onclick=putarPeta;$('putarB').style.setProperty('--r',ROT*90+'deg')}if($('alamP'))$('alamP').onclick=()=>{if(window.alamBuka)alamBuka()};$('lvUp').onclick=tierUp;if($('pasP'))$('pasP').onclick=()=>{if(window.bukaBarak)bukaBarak()};
